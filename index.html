@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Animal Spirits — State Feed</title>
+<style>
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+         max-width: 640px; margin: 4rem auto; padding: 0 1.5rem;
+         color: #1a1a1a; line-height: 1.55; }
+  h1 { font-weight: 500; letter-spacing: -0.02em; font-size: 1.6rem; }
+  code { background: #f0ede6; padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+  a { color: #4A7FB5; }
+  pre { background: #f5f3ee; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; }
+  .muted { color: #888; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<h1>Animal Spirits — State Feed</h1>
+<p>This repository publishes a static JSON feed representing the current composed field state of the
+<a href="https://github.com/super-futures/animal-spirits">Animal Spirits</a> observatory.</p>
+
+<p>The feed is refreshed every 15 minutes by a scheduled GitHub Action that fetches from Twelve Data (market),
+FRED (macro stress), Wikimedia Pageviews (attention), and GDELT (narrative), then composes a unified state.</p>
+
+<h2>Current state</h2>
+<p><a href="data/state.json"><code>data/state.json</code></a></p>
+
+<h2>Contract</h2>
+<pre>{
+  "timestamp": "ISO-8601 UTC",
+  "regions": {
+    "us":    { "attention": number|null, "market": number|null, "narrative": number|null },
+    "uk":    { ... },
+    "india": { ... }
+  },
+  "meta": {
+    "attention": "live" | "simulated",
+    "market":    "live" | "simulated",
+    "narrative": "live" | "simulated"
+  }
+}</pre>
+<p class="muted">All scalars are in approximately [−1, +1]. Negative values indicate stress/contraction-coded states;
+positive values indicate expansion-coded states.</p>
+
+<p class="muted">See the <a href="https://github.com/super-futures/animal-spirits-api">repository README</a>
+for the full normalisation methodology.</p>
+</body>
+</html>
