@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-04-24T00:00:00+00:00",
+  "regions": {
+    "us":    { "attention": null, "market": null, "narrative": null },
+    "uk":    { "attention": null, "market": null, "narrative": null },
+    "india": { "attention": null, "market": null, "narrative": null }
+  },
+  "meta": {
+    "attention": "simulated",
+    "market":    "simulated",
+    "narrative": "simulated"
+  }
+}
