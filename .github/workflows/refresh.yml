@@ -1,0 +1,63 @@
+name: Refresh Animal Spirits state
+
+on:
+  # Every 15 minutes, matching GDELT's own update cadence.
+  # Note: GitHub cron has some jitter — actual runs land within ~5 min of schedule.
+  schedule:
+    - cron: "*/15 * * * *"
+  # Allow manual triggering from the Actions tab, useful for first run / debugging.
+  workflow_dispatch:
+  # Also run on push to main for the code itself, so config changes take effect immediately.
+  push:
+    branches: [main]
+    paths:
+      - "run.py"
+      - "sources/**"
+      - "normalise.py"
+      - ".github/workflows/refresh.yml"
+
+# Prevent two runs from racing each other on the commit.
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: write   # Needed to commit state.json back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compose state
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+          FRED_API_KEY:        ${{ secrets.FRED_API_KEY }}
+        run: python run.py
+
+      - name: Commit updated state
+        run: |
+          git config user.name  "animal-spirits-bot"
+          git config user.email "bot@animal-spirits.local"
+          git add data/state.json data/cache.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "state refresh: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            git push
+          fi
