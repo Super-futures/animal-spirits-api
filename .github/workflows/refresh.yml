@@ -1,13 +1,9 @@
 name: Refresh Animal Spirits state
 
 on:
-  # Every 15 minutes, matching GDELT's own update cadence.
-  # Note: GitHub cron has some jitter — actual runs land within ~5 min of schedule.
   schedule:
     - cron: "*/15 * * * *"
-  # Allow manual triggering from the Actions tab, useful for first run / debugging.
   workflow_dispatch:
-  # Also run on push to main for the code itself, so config changes take effect immediately.
   push:
     branches: [main]
     paths:
@@ -16,7 +12,6 @@ on:
       - "normalise.py"
       - ".github/workflows/refresh.yml"
 
-# Prevent two runs from racing each other on the commit.
 concurrency:
   group: refresh
   cancel-in-progress: false
@@ -27,7 +22,7 @@ jobs:
     timeout-minutes: 10
 
     permissions:
-      contents: write   # Needed to commit state.json back to the repo
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -57,7 +52,20 @@ jobs:
           git add data/state.json data/cache.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
-          else
-            git commit -m "state refresh: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-            git push
+            exit 0
           fi
+          git commit -m "state refresh: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          # Pull with rebase so a concurrent push doesn't reject ours.
+          # Stash the working tree first (in case cache.json changed again),
+          # pull, then push.
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || true
+            if git push origin main; then
+              echo "Push succeeded."
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying in 5s..."
+            sleep 5
+          done
+          echo "Push failed after 3 attempts."
+          exit 1
