@@ -41,8 +41,8 @@ jobs:
 
       - name: Compose state
         env:
-          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
-          FRED_API_KEY:        ${{ secrets.FRED_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+          FRED_API_KEY:          ${{ secrets.FRED_API_KEY }}
         run: python run.py
 
       - name: Commit updated state
@@ -55,9 +55,6 @@ jobs:
             exit 0
           fi
           git commit -m "state refresh: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          # Pull with rebase so a concurrent push doesn't reject ours.
-          # Stash the working tree first (in case cache.json changed again),
-          # pull, then push.
           for i in 1 2 3; do
             git pull --rebase --autostash origin main || true
             if git push origin main; then
