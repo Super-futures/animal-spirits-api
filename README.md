@@ -1,32 +1,28 @@
-# Animal Spirits — Static State Feed
+# animal-spirits-api
 
-A scheduled job that composes a single coherent field state from attention, market, and narrative signals, and publishes it as a static JSON file. Part of the [Animal Spirits](https://github.com/super-futures/animal-spirits) observatory.
+The backend for [Animal Spirits](https://super-futures.github.io/animal-spirits/) — a live affective observatory reading three axes of collective state across three regions.
 
-## How it works
+This repo is not a server. It is a **scheduled composition job** that runs every 15 minutes via GitHub Actions, fetches live data from four independent upstream sources, composes a single unified state, and commits the result as a static JSON file served by GitHub Pages.
 
-No server. No cold start. No billing.
+**Live feed:** [super-futures.github.io/animal-spirits-api/data/state.json](https://super-futures.github.io/animal-spirits-api/data/state.json)
 
-A GitHub Actions workflow runs every 15 minutes, fetches fresh data from Twelve Data (market), FRED (macro stress), Wikimedia Pageviews (attention), and GDELT (narrative), normalises them into a unified state, and commits `data/state.json` back to the repository. GitHub Pages serves this file as a static asset with CORS enabled by default.
+---
 
-The frontend polls the JSON file via `https://super-futures.github.io/animal-spirits-api/data/state.json`.
+## Why this shape
 
-## Why this architecture
+Historically, the project ran as a FastAPI service behind a Render free dyno. That architecture had three problems: cold starts of 20–90 seconds, tight free-tier request limits, and the observatory being coupled to a server that could go down. The current design removes the server entirely. There is no runtime code. A scheduled job computes the state, commits it to git, and GitHub Pages serves the file statically. Cost is zero, and uptime is whatever GitHub Pages' is.
 
-The three underlying data sources update at different cadences — Wikimedia is daily-granular, FRED is daily, GDELT is every ~15 min, and even intraday market data doesn't meaningfully change every few seconds for a reflective observatory. Refreshing a static feed every 15 minutes is conceptually honest: it matches the actual update cadence of the upstream data rather than pretending to be more live than it is.
+A side effect worth naming: `git log data/state.json` is now a full-time series of every sample ever composed. The commit history *is* the research dataset.
 
-The fact that it's also free, requires no server process, has no cold start, and cannot incur surprise costs is a welcome side effect.
-
-## API Contract
-
-### `data/state.json`
+## The output contract
 
 ```json
 {
-  "timestamp": "2026-04-24T03:15:22.841Z",
+  "timestamp": "2026-04-24T03:45:41Z",
   "regions": {
-    "us":    { "attention": 0.12, "market": -0.34, "narrative": -0.18 },
-    "uk":    { "attention": 0.08, "market": -0.21, "narrative": -0.11 },
-    "india": { "attention": 0.31, "market":  0.09, "narrative":  0.04 }
+    "us":    {"attention": 0.031, "market": 0.242, "narrative": -0.268},
+    "uk":    {"attention": 0.091, "market": 0.100, "narrative":  0.000},
+    "india": {"attention":-0.108, "market": 0.172, "narrative": -0.199}
   },
   "meta": {
     "attention": "live",
@@ -36,96 +32,116 @@ The fact that it's also free, requires no server process, has no cold start, and
 }
 ```
 
-All scalars are in roughly `[−1, +1]`. Negative values = stress/contraction-coded states; positive = expansion-coded states. `null` values indicate the source was unavailable for that region. `meta.<axis>` is `"live"` when that axis produced real data for at least one region in the most recent run, `"simulated"` when the source failed entirely.
+Each scalar is in approximately `[−1, +1]`. Negative = stress-coded, positive = expansion-coded, zero = neutral or unavailable. The `meta` field records whether each axis is currently backed by real fetched data (`"live"`) or has fallen back to a synthetic default (`"simulated"`).
 
-## Normalisation Methodology
+## The three axes
 
-Each axis normalises against its own rolling history, not against uniform min-max scaling. This preserves the information content of unusual movements relative to each signal's own baseline.
+### Attention — Wikimedia Pageviews
+Per region, we fetch the 30-day daily pageview history for 8 Wikipedia articles per affect cluster (anxiety, confidence, aspiration, constraint) for a total of 32 articles per region, localised to the region's relevant terms. The latest day's views are z-scored against the preceding 29-day history, weighted and composited per cluster, and tanh-squashed to `[−1, +1]`. Anxiety and constraint push the composite negative; confidence and aspiration push it positive.
 
-### Attention (Wikimedia Pageviews)
+### Market — Alpha Vantage (ETFs) + FRED (macro stress)
+Two sources composited:
 
-- For each of four affect clusters (anxiety, confidence, aspiration, constraint), fetch ~8 English Wikipedia articles per region.
-- For each article, fetch 30 days of daily pageview counts.
-- Z-score the most recent day against the prior 29 days.
-- Average within each cluster; weighted sum across clusters (anxiety/constraint negative, confidence/aspiration positive).
-- tanh-squash to `[−1, +1]`.
+- **Local equity** via ETF proxies: `SPY` (US S&P 500 via SPDR), `ISF.LON` (UK FTSE 100 via iShares Core), `NIFTYBEES.BSE` (India Nifty 50 via Nippon India). Daily closes, recent-return Sharpe-style scalar. ETFs chosen because Alpha Vantage's free tier covers equities but not index endpoints; tracking error is well under 1% and ETFs are arguably more "affective" (they are what people actually trade).
+- **Global macro-stress backdrop** via FRED: `VIXCLS`, `BAMLH0A0HYM2` (high-yield credit spread), `DTWEXBGS` (trade-weighted dollar). Z-scored, weighted, tanh-squashed. Applied identically to all three regions as a shared stress environment.
 
-### Market (Twelve Data + FRED)
+Composite per region: `0.55 × local_equity + 0.45 × global_stress`.
 
-A two-part composite per region:
+### Narrative — GDELT DOC 2.0
+Per region, a single request to the `TimelineTone` endpoint with anxiety keywords scoped by `sourcecountry`. Returns the average tone of matching news over the last 24 hours as a time series; we take the most recent non-null value and normalise `/5` into `[−1, +1]`. Negative tone is read directly as narrative stress (no sign flip).
 
-**Local equity** (Twelve Data): regional index (SPX / UKX / NIFTY), Sharpe-like ratio of recent return to recent vol, tanh-squashed.
+GDELT rate-limits free endpoints aggressively and occasionally refuses TCP connections from GitHub Actions runner IPs. The fetcher uses keep-alive connections with 30-second timeouts and retries up to 3× with 10-second backoff.
 
-**Global stress backdrop** (FRED, applied to all three regions):
-- VIX (`VIXCLS`): z-score, inverted
-- HY credit spread (`BAMLH0A0HYM2`): z-score, inverted
-- Dollar index (`DTWEXBGS`): `|z-score|`, inverted
-- Composite: `−0.40·vix_z − 0.40·credit_z − 0.20·|dollar_z|`, tanh-squashed
+## Architecture
 
-**Regional composite:** `0.55 × local_equity + 0.45 × global_stress`
+```
+.github/workflows/refresh.yml     GitHub Actions cron (every 15 min)
+run.py                            Entry point, calls composer
+state.py                          Composes unified state from sources
+sources/
+  attention.py                    Wikimedia Pageviews fetcher
+  market.py                       Alpha Vantage + FRED fetcher
+  narrative.py                    GDELT TimelineTone fetcher
+cache.py                          File-backed TTL cache (persists to data/cache.json)
+normalise.py                      z_score, tanh_squash, clip helpers
+data/
+  state.json                      ← This is the live output
+  cache.json                      Persisted cache baselines
+index.html                        Landing page
+```
 
-### Narrative (GDELT DOC 2.0)
+The workflow writes both `data/state.json` and `data/cache.json` each run. Persisting the cache across runs means baseline windows (Wikimedia 30-day history, FRED series, etc.) survive between invocations.
 
-- For each cluster × region, query GDELT ArtList for the last 24h filtered by `sourcecountry`.
-- Extract mean tone and article count.
-- Tone normalised by dividing by 5 (empirical GDELT tone range is ~±8).
-- Volume anomaly: today's count vs. 7-day daily average, tanh-squashed.
-- Signed composite: `sign(tone) × |tone_norm| × (1 + 0.5·|vol_anomaly|)`, cluster-weighted, tanh-squashed.
+## Rate limits and caching
 
-### Cross-run state
+| Source | Limit | Cache TTL | Net usage |
+|--------|-------|-----------|-----------|
+| Alpha Vantage | 5 req/min, 500 req/day | 6 hours | ~12 calls/day |
+| FRED | Unlimited (practical) | 1 hour | 3 calls/run |
+| Wikimedia | Polite ~100 req/min | 1 hour | ~32 calls/run, once per hour |
+| GDELT | ~1 req / 5s | 15 min | 3 calls/run |
 
-The file-backed cache (`data/cache.json`) persists rolling baselines and intermediate values between Action runs, so z-scoring remains stable across invocations. The cache prunes expired entries on each flush.
+Alpha Vantage calls are serialised with 12-second gaps (= exactly the 5/min limit). GDELT calls are serialised with 6-second gaps and use HTTP keep-alive to sidestep connection-refusal timeouts. FRED and Wikimedia calls run concurrently.
 
-## Setup
+## Commit-push conflict handling
 
-### 1. Create the repository
+Because scheduled and manually-dispatched runs can overlap, the workflow uses a hard-reset-then-overwrite pattern rather than merging. On each push attempt:
 
-Push this code to a public GitHub repository (e.g. `super-futures/animal-spirits-api`).
+1. Copy freshly-generated `state.json` and `cache.json` to a tmp location
+2. `git fetch` + `git reset --hard origin/main`
+3. Overwrite with the fresh data files
+4. Commit and push
+5. If push still fails, loop up to 5 times
 
-### 2. Add API keys as repository secrets
+This is safe because both files are regenerated wholesale each run; there is no semantic value to preserving "both sides" of a conflict.
 
-In GitHub: Settings → Secrets and variables → Actions → New repository secret
+## Upgrade hooks
 
-- `TWELVE_DATA_API_KEY` — from https://twelvedata.com/
-- `FRED_API_KEY` — from https://fred.stlouisfed.org/docs/api/api_key.html
+If the Alpha Vantage plan is upgraded to paid tier, replace the ETF symbols in `sources/market.py`:
 
-### 3. Enable GitHub Pages
+```python
+EQUITY_SYMBOLS = {
+    "us":    "SPX",        # S&P 500 index directly
+    "uk":    "UKX",        # FTSE 100
+    "india": "NIFTY",      # Nifty 50
+}
+```
 
-In GitHub: Settings → Pages → Source = Deploy from a branch → Branch = `main` / root.
+No other code changes required.
 
-After the first successful Action run, `data/state.json` will be served at:
-`https://<your-org>.github.io/animal-spirits-api/data/state.json`
-
-### 4. Trigger the first run manually
-
-Actions tab → "Refresh Animal Spirits state" → Run workflow.
-
-Subsequent runs are automatic every 15 minutes.
-
-## Local development
+## Running locally
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env   # Fill in your keys
-export $(cat .env | xargs)
+export ALPHA_VANTAGE_API_KEY=your_key
+export FRED_API_KEY=your_key
 python run.py
 ```
 
-This runs the same code that runs in CI, writing to `data/state.json` locally. Safe to do — it won't push anything to git.
+`data/state.json` will be written to the working directory. No GDELT, Wikimedia, or narrative keys are needed — both are free public endpoints.
 
-## Observability
+## Secrets required
 
-- Each Action run logs a state summary: which axes were live, what the composed values were per region.
-- The commit message on each successful run includes the UTC timestamp.
-- Git history becomes an audit log of state evolution — `git log data/state.json` shows every 15-minute snapshot since deployment.
+Set as GitHub repo secrets for the workflow to run:
 
-## Limitations
+- `ALPHA_VANTAGE_API_KEY` — [get one here](https://www.alphavantage.co/support/#api-key), free tier is fine
+- `FRED_API_KEY` — [get one here](https://fred.stlouisfed.org/docs/api/api_key.html), free
 
-- **15-minute minimum cadence.** GitHub's cron has jitter; actual runs land within ~5 min of schedule. For a reflective observatory this is fine; for a trading signal it would not be.
-- **No query parameters.** The feed is one endpoint, one response shape. By design.
-- **Public by necessity.** GitHub Pages serves public repos only (on free tier). The data is already public; don't use this pattern for anything sensitive.
+## Attribution
 
-## Version
+- GDELT Project — computational-narrative infrastructure
+- Wikimedia Foundation — Pageviews API
+- Alpha Vantage — equity time-series API
+- Federal Reserve Bank of St. Louis — FRED API
 
-v1.0 — static JSON feed composed every 15 min via GitHub Actions.
-Replaces the earlier FastAPI+Render architecture.
+## Versions
+
+- **v1.0** (current) — static JSON feed architecture, Alpha Vantage ETF proxies replacing prior Yahoo / Stooq / Twelve Data dead ends, GDELT TimelineTone replacing prior ArtList mode.
+
+## Sibling repo
+
+The frontend observatory that consumes this feed: [super-futures/animal-spirits](https://github.com/super-futures/animal-spirits).
+
+## Maintainer
+
+Leon, at [Superfutures](https://github.com/super-futures), Auckland.
