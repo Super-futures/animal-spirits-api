@@ -103,6 +103,7 @@ async def _cluster_signal(client: httpx.AsyncClient, region: str, cluster: str) 
 
     current = await _gdelt_query(client, query, country, timespan="1d")
     if current is None:
+        log.warning("narrative[%s/%s]: 1d query returned None", region, cluster)
         return None
     await asyncio.sleep(REQUEST_PAUSE)
 
@@ -115,10 +116,21 @@ async def _cluster_signal(client: httpx.AsyncClient, region: str, cluster: str) 
             baseline_daily = baseline_count / 7.0
             cache.set(baseline_key, baseline_daily, BASELINE_TTL)
             baseline = baseline_daily
+            log.info("narrative[%s/%s]: baseline set to %.2f/day", region, cluster, baseline_daily)
             await asyncio.sleep(REQUEST_PAUSE)
+        else:
+            log.warning("narrative[%s/%s]: 7d baseline query returned None", region, cluster)
 
     tone, volume = _extract_tone_and_volume(current)
+    log.info("narrative[%s/%s]: tone=%s volume=%d baseline=%s",
+             region, cluster,
+             f"{tone:+.2f}" if tone is not None else "None",
+             volume,
+             f"{baseline:.2f}" if baseline is not None else "None")
+
     if tone is None or volume == 0:
+        log.warning("narrative[%s/%s]: returning None (tone=%s, volume=%d)",
+                    region, cluster, tone, volume)
         return None
 
     tone_norm = clip(tone / 5.0)
@@ -131,7 +143,9 @@ async def _cluster_signal(client: httpx.AsyncClient, region: str, cluster: str) 
 
     magnitude = abs(tone_norm) * (1.0 + 0.5 * abs(vol_anomaly))
     signed = (1.0 if tone_norm >= 0 else -1.0) * magnitude
-    return clip(signed)
+    result = clip(signed)
+    log.info("narrative[%s/%s]: signal=%+.3f", region, cluster, result)
+    return result
 
 
 async def fetch_narrative() -> tuple[dict[str, Optional[float]], str]:
