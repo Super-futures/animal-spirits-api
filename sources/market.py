@@ -1,23 +1,34 @@
 """
-Market source: Stooq (regional equity) + FRED (US macro stress).
-
-Stooq serves CSV directly via simple URL params, works from GitHub Actions
-runners, requires no API key, and covers all three indices we need:
-    ^SPX  (S&P 500)
-    ^UKX  (FTSE 100)
-    ^NIFTY (Nifty 50)
-
-FRED retained for the stress backdrop (VIX, HY credit, dollar).
+Market source: Alpha Vantage ETF proxies + FRED macro stress backdrop.
 
 Composite per region: 0.55 * local_equity + 0.45 * global_stress_backdrop
+
+Local equity uses major index-tracking ETFs rather than the indices
+themselves, because Alpha Vantage's free tier covers equities but not
+index endpoints. The ETFs track their indices closely (tracking error
+well under 1%) and are arguably more "affective" reads — they're what
+people actually trade when they want exposure to the index.
+
+ETF proxies:
+    US:    SPY           (SPDR S&P 500 ETF, tracks S&P 500)
+    UK:    ISF.LON       (iShares Core FTSE 100, tracks FTSE 100)
+    India: NIFTYBEES.BSE (Nippon India ETF Nifty 50)
+
+Upgrade path: to use the actual index series (SPX, UKX, NIFTY), upgrade
+Alpha Vantage to a paid plan and change EQUITY_SYMBOLS below. No other
+code changes needed.
+
+Alpha Vantage free tier: 25 requests/day. We cache for 6 hours, so
+3 symbols x 4 fetches/day = 12 calls/day. Well under limit.
+
+FRED provides VIX, HY credit spread, and trade-weighted dollar as a
+global stress backdrop applied identically to all three regions.
 """
 
 import os
 import asyncio
 import logging
 from typing import Optional
-from io import StringIO
-import csv
 
 import httpx
 
@@ -26,13 +37,13 @@ from normalise import z_score, tanh_squash, clip
 
 log = logging.getLogger("animal-spirits.market")
 
+ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_API_KEY", "")
 FRED_KEY = os.getenv("FRED_API_KEY", "")
 
-# Stooq index tickers
 EQUITY_SYMBOLS = {
-    "us":    "^spx",
-    "uk":    "^ukx",
-    "india": "^nifty",
+    "us":    "SPY",
+    "uk":    "ISF.LON",
+    "india": "NIFTYBEES.BSE",
 }
 
 FRED_SERIES = {
@@ -41,56 +52,71 @@ FRED_SERIES = {
     "dollar": "DTWEXBGS",
 }
 
-EQUITY_TTL = 300
+EQUITY_TTL = 6 * 3600
 FRED_TTL   = 3600
 
 
-async def _fetch_stooq_series(client: httpx.AsyncClient, symbol: str) -> Optional[list[float]]:
-    """
-    Fetch daily closes for a Stooq symbol as CSV.
-    Stooq returns full history; we take the last ~40 rows for our window.
-    """
-    cache_key = f"stooq:{symbol}"
+async def _fetch_alpha_vantage_series(client, symbol):
+    cache_key = f"av:{symbol}"
     cached = cache.get(cache_key)
     if cached is not None:
         return cached
 
-    url = f"https://stooq.com/q/d/l/?s={symbol}&i=d"
+    if not ALPHA_VANTAGE_KEY:
+        log.warning("Alpha Vantage key missing for %s", symbol)
+        return None
+
+    url = "https://www.alphavantage.co/query"
+    params = {
+        "function": "TIME_SERIES_DAILY",
+        "symbol": symbol,
+        "outputsize": "compact",
+        "apikey": ALPHA_VANTAGE_KEY,
+    }
     try:
-        r = await client.get(url, timeout=10.0, headers={
-            "User-Agent": "AnimalSpirits/1.0 (research; https://github.com/super-futures/animal-spirits-api)"
-        })
-        if r.status_code != 200:
-            log.warning("Stooq returned %d for %s", r.status_code, symbol)
+        r = await client.get(url, params=params, timeout=15.0)
+        r.raise_for_status()
+        data = r.json()
+
+        if "Note" in data:
+            log.warning("Alpha Vantage rate-limited for %s: %s", symbol, data["Note"][:120])
             return None
-        text = r.text
-        # Stooq error responses are small (< 100 chars) or the literal string "No data"
-        if len(text) < 100 or "No data" in text:
-            log.warning("Stooq returned empty/error body for %s: %r", symbol, text[:80])
+        if "Information" in data:
+            log.warning("Alpha Vantage info for %s: %s", symbol, data["Information"][:120])
             return None
-        # CSV: Date,Open,High,Low,Close,Volume
-        reader = csv.DictReader(StringIO(text))
+        if "Error Message" in data:
+            log.warning("Alpha Vantage error for %s: %s", symbol, data["Error Message"])
+            return None
+
+        series = data.get("Time Series (Daily)")
+        if not series:
+            log.warning("Alpha Vantage: no time series for %s (keys: %s)", symbol, list(data.keys())[:5])
+            return None
+
+        dates_sorted = sorted(series.keys())
         closes = []
-        for row in reader:
-            close_str = row.get("Close", "").strip()
-            if close_str and close_str != "-":
+        for date in dates_sorted:
+            day = series[date]
+            close_str = day.get("4. close")
+            if close_str:
                 try:
                     closes.append(float(close_str))
                 except ValueError:
                     pass
+
         if len(closes) < 10:
-            log.warning("Stooq returned insufficient data for %s: %d closes", symbol, len(closes))
+            log.warning("Alpha Vantage %s: only %d closes returned", symbol, len(closes))
             return None
-        # Use last 40 rows for our window
-        closes = closes[-40:]
+
+        log.info("Alpha Vantage %s: %d closes, latest=%.2f", symbol, len(closes), closes[-1])
         cache.set(cache_key, closes, EQUITY_TTL)
         return closes
     except Exception as e:
-        log.warning("Stooq fetch failed for %s: %s", symbol, e)
+        log.warning("Alpha Vantage fetch failed for %s: %s", symbol, e)
         return None
 
 
-async def _fetch_fred_series(client: httpx.AsyncClient, series_id: str) -> Optional[list[float]]:
+async def _fetch_fred_series(client, series_id):
     cache_key = f"fred:{series_id}"
     cached = cache.get(cache_key)
     if cached is not None:
@@ -130,7 +156,7 @@ async def _fetch_fred_series(client: httpx.AsyncClient, series_id: str) -> Optio
         return None
 
 
-def _equity_scalar(closes: list[float]) -> float:
+def _equity_scalar(closes):
     if len(closes) < 10:
         return 0.0
     returns = []
@@ -149,7 +175,7 @@ def _equity_scalar(closes: list[float]) -> float:
     return tanh_squash(ratio, scale=2.0)
 
 
-def _stress_scalar(vix: list[float], credit: list[float], dollar: list[float]) -> float:
+def _stress_scalar(vix, credit, dollar):
     if not vix or not credit or not dollar:
         return 0.0
     vix_z    = z_score(vix[-1], vix[:-1])
@@ -163,10 +189,10 @@ def _stress_scalar(vix: list[float], credit: list[float], dollar: list[float]) -
     return tanh_squash(stress, scale=1.5)
 
 
-async def fetch_market() -> tuple[dict[str, Optional[float]], str]:
+async def fetch_market():
     async with httpx.AsyncClient() as client:
         equity_tasks = {
-            region: _fetch_stooq_series(client, symbol)
+            region: _fetch_alpha_vantage_series(client, symbol)
             for region, symbol in EQUITY_SYMBOLS.items()
         }
         fred_tasks = {
@@ -193,7 +219,7 @@ async def fetch_market() -> tuple[dict[str, Optional[float]], str]:
     )
     stress_live = all(fred_results.get(k) for k in ("vix", "credit", "dollar"))
 
-    out: dict[str, Optional[float]] = {}
+    out = {}
     any_live = False
     for region, closes in equity_results.items():
         if closes is None:
@@ -207,6 +233,8 @@ async def fetch_market() -> tuple[dict[str, Optional[float]], str]:
             composite = 0.55 * eq + (0.45 * stress if stress_live else 0.0)
             out[region] = clip(composite)
             any_live = True
+            log.info("market[%s]: equity=%+.3f stress=%+.3f composite=%+.3f",
+                     region, eq, stress if stress_live else 0.0, out[region])
 
     status = "live" if any_live else "simulated"
     return out, status
