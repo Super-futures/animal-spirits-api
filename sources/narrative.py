@@ -1,19 +1,19 @@
 """
 Narrative source: GDELT DOC 2.0 API, TimelineTone mode.
 
-Tone is what GDELT measures natively. We fetch the 1-day tone timeline
-per region and take the most recent non-null value. Negative tone on
-anxiety keywords = narrative stress (directly, no sign flip needed).
+Tone is GDELT's native output. Negative tone on anxiety keywords = 
+narrative stress, used directly without sign flip.
 
-Rate limit: GDELT documents 1 req/5s. We use 8s pauses including before
-the first request, to give the server margin.
+Connection strategy: one keep-alive httpx client, 30s timeouts, retry
+on ConnectTimeout. GDELT's free endpoint is slow and sometimes refuses
+fresh TCP connections from GitHub Actions runners; reusing an open
+connection sidesteps that.
 
 Output: scalar in (-1, +1) per region. Negative = stress dominant.
 """
 
 import asyncio
 import logging
-from typing import Optional
 
 import httpx
 
@@ -31,7 +31,9 @@ COUNTRY_CODES = {
 }
 
 NARRATIVE_TTL = 900
-REQUEST_PAUSE = 8.0
+REQUEST_PAUSE = 6.0
+MAX_ATTEMPTS = 3
+RETRY_DELAY = 10.0
 
 
 async def _gdelt_timeline_tone(client, country):
@@ -48,53 +50,83 @@ async def _gdelt_timeline_tone(client, country):
         "format": "json",
         "timespan": "1d",
     }
-    try:
-        r = await client.get(url, params=params, timeout=20.0)
-        if r.status_code != 200:
-            log.warning("GDELT TimelineTone %s returned %d", country, r.status_code)
-            return None
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
-            data = r.json()
+            r = await client.get(url, params=params)
+            if r.status_code != 200:
+                log.warning("GDELT TimelineTone %s attempt %d: HTTP %d", country, attempt, r.status_code)
+                if attempt < MAX_ATTEMPTS:
+                    await asyncio.sleep(RETRY_DELAY)
+                    continue
+                return None
+            try:
+                data = r.json()
+            except Exception as e:
+                log.warning("GDELT TimelineTone %s attempt %d: JSON parse failed: %s", country, attempt, e)
+                if attempt < MAX_ATTEMPTS:
+                    await asyncio.sleep(RETRY_DELAY)
+                    continue
+                return None
+
+            timeline = data.get("timeline", [])
+            if not timeline:
+                log.warning("GDELT TimelineTone %s: empty timeline", country)
+                return None
+            points = timeline[0].get("data", [])
+            if not points:
+                log.warning("GDELT TimelineTone %s: empty data points", country)
+                return None
+
+            latest_tone = None
+            for point in reversed(points):
+                v = point.get("value")
+                if v is not None and isinstance(v, (int, float)):
+                    latest_tone = float(v)
+                    break
+
+            if latest_tone is None:
+                log.warning("GDELT TimelineTone %s: no numeric values", country)
+                return None
+
+            log.info("GDELT TimelineTone %s: latest tone = %+.2f (from %d points, attempt %d)",
+                     country, latest_tone, len(points), attempt)
+            cache.set(cache_key, latest_tone, NARRATIVE_TTL)
+            return latest_tone
+
+        except httpx.ConnectTimeout:
+            log.warning("GDELT TimelineTone %s attempt %d: ConnectTimeout", country, attempt)
+            if attempt < MAX_ATTEMPTS:
+                await asyncio.sleep(RETRY_DELAY)
+                continue
+            return None
+        except httpx.ReadTimeout:
+            log.warning("GDELT TimelineTone %s attempt %d: ReadTimeout", country, attempt)
+            if attempt < MAX_ATTEMPTS:
+                await asyncio.sleep(RETRY_DELAY)
+                continue
+            return None
         except Exception as e:
-            log.warning("GDELT TimelineTone %s JSON parse failed: %s", country, e)
+            log.warning("GDELT TimelineTone %s attempt %d: %s", country, attempt, repr(e))
+            if attempt < MAX_ATTEMPTS:
+                await asyncio.sleep(RETRY_DELAY)
+                continue
             return None
 
-        timeline = data.get("timeline", [])
-        if not timeline:
-            log.warning("GDELT TimelineTone %s: empty timeline", country)
-            return None
-        points = timeline[0].get("data", [])
-        if not points:
-            log.warning("GDELT TimelineTone %s: empty data points", country)
-            return None
-
-        latest_tone = None
-        for point in reversed(points):
-            v = point.get("value")
-            if v is not None and isinstance(v, (int, float)):
-                latest_tone = float(v)
-                break
-
-        if latest_tone is None:
-            log.warning("GDELT TimelineTone %s: no numeric values in %d points", country, len(points))
-            return None
-
-        log.info("GDELT TimelineTone %s: latest tone = %+.2f (from %d points)", country, latest_tone, len(points))
-        cache.set(cache_key, latest_tone, NARRATIVE_TTL)
-        return latest_tone
-    except Exception as e:
-        log.warning("GDELT TimelineTone fetch failed (%s): %s", country, repr(e))
-        return None
+    return None
 
 
 async def fetch_narrative():
     out = {}
     any_live = False
 
-    async with httpx.AsyncClient() as client:
+    # Keep-alive client, generous timeout.
+    timeout = httpx.Timeout(30.0, connect=15.0)
+    limits = httpx.Limits(max_keepalive_connections=1, keepalive_expiry=60.0)
+
+    async with httpx.AsyncClient(timeout=timeout, limits=limits,
+                                 headers={"User-Agent": "AnimalSpirits/1.0"}) as client:
         for region in ("us", "uk", "india"):
-            # Pause before every request, including the first,
-            # to give GDELT's rate-limit window some margin.
             await asyncio.sleep(REQUEST_PAUSE)
 
             country = COUNTRY_CODES[region]
@@ -104,9 +136,6 @@ async def fetch_narrative():
                 out[region] = None
                 continue
 
-            # Negative tone on anxiety keywords = stress signal directly.
-            # Normalise: GDELT tone is roughly [-10, +10] in practice.
-            # Divide by 5 and squash.
             tone_norm = clip(tone / 5.0)
             out[region] = tanh_squash(tone_norm, scale=1.0)
             any_live = True
