@@ -190,22 +190,31 @@ def _stress_scalar(vix, credit, dollar):
 
 
 async def fetch_market():
+    equity_results = {}
+    fred_results = {}
+
     async with httpx.AsyncClient() as client:
-        equity_tasks = {
-            region: _fetch_alpha_vantage_series(client, symbol)
-            for region, symbol in EQUITY_SYMBOLS.items()
-        }
+        # FRED first, concurrently (no per-minute rate limit issue).
         fred_tasks = {
             name: _fetch_fred_series(client, series_id)
             for name, series_id in FRED_SERIES.items()
         }
-        all_results = await asyncio.gather(
-            *equity_tasks.values(), *fred_tasks.values(),
-            return_exceptions=True,
-        )
+        fred_values = await asyncio.gather(*fred_tasks.values(), return_exceptions=True)
+        fred_results = dict(zip(fred_tasks.keys(), fred_values))
 
-    equity_results = dict(zip(equity_tasks.keys(), all_results[:3]))
-    fred_results = dict(zip(fred_tasks.keys(), all_results[3:]))
+        # Alpha Vantage: serial with 12s gaps.
+        # Free tier is 5 req/min, so 12s pacing = 5/min exactly.
+        # Cache means most calls are served from disk after first run of the day.
+        first = True
+        for region, symbol in EQUITY_SYMBOLS.items():
+            if not first:
+                await asyncio.sleep(12.0)
+            first = False
+            try:
+                equity_results[region] = await _fetch_alpha_vantage_series(client, symbol)
+            except Exception as e:
+                log.warning("Alpha Vantage exception for %s: %s", symbol, e)
+                equity_results[region] = None
 
     for d in (equity_results, fred_results):
         for k, v in list(d.items()):
