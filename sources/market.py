@@ -1,27 +1,25 @@
 """
-Market source: Yahoo Finance (regional equity) + FRED (US macro stress).
+Market source: Stooq (regional equity) + FRED (US macro stress).
 
-The composite scalar per region is:
-    0.55 * local_equity + 0.45 * global_stress_backdrop
+Stooq serves CSV directly via simple URL params, works from GitHub Actions
+runners, requires no API key, and covers all three indices we need:
+    ^SPX  (S&P 500)
+    ^UKX  (FTSE 100)
+    ^NIFTY (Nifty 50)
 
-Where:
-    local_equity  = recent return / recent vol (Sharpe-like), per region
-    global_stress = US VIX + HY credit spread + dollar anomaly, inverted
+FRED retained for the stress backdrop (VIX, HY credit, dollar).
 
-Yahoo via yfinance for equity because GitHub Actions runners have
-unrestricted egress, avoiding the cloud-IP blocking that affected earlier
-hosted-proxy attempts. FRED retained for the stress backdrop — these
-indicators have no clean equivalents elsewhere.
+Composite per region: 0.55 * local_equity + 0.45 * global_stress_backdrop
 """
 
 import os
 import asyncio
 import logging
 from typing import Optional
-from concurrent.futures import ThreadPoolExecutor
+from io import StringIO
+import csv
 
 import httpx
-import yfinance as yf
 
 from cache import cache
 from normalise import z_score, tanh_squash, clip
@@ -30,55 +28,66 @@ log = logging.getLogger("animal-spirits.market")
 
 FRED_KEY = os.getenv("FRED_API_KEY", "")
 
-# Regional equity indices on Yahoo Finance
+# Stooq index tickers
 EQUITY_SYMBOLS = {
-    "us":    "^GSPC",  # S&P 500
-    "uk":    "^FTSE",  # FTSE 100
-    "india": "^NSEI",  # Nifty 50
+    "us":    "^spx",
+    "uk":    "^ukx",
+    "india": "^nifty",
 }
 
-# FRED series IDs for macro stress backdrop
 FRED_SERIES = {
-    "vix":    "VIXCLS",       # CBOE Volatility Index
-    "credit": "BAMLH0A0HYM2", # ICE BofA US High Yield Index OAS
-    "dollar": "DTWEXBGS",     # Trade-Weighted US Dollar Index: Broad
+    "vix":    "VIXCLS",
+    "credit": "BAMLH0A0HYM2",
+    "dollar": "DTWEXBGS",
 }
 
 EQUITY_TTL = 300
 FRED_TTL   = 3600
 
 
-def _fetch_yahoo_sync(symbol: str) -> Optional[list[float]]:
-    """Synchronous yfinance call. Runs in a threadpool from async context."""
-    try:
-        ticker = yf.Ticker(symbol)
-        # ~2 months of daily history gives us enough for the short-horizon Sharpe.
-        hist = ticker.history(period="2mo", interval="1d")
-        if hist.empty or len(hist) < 10:
-            return None
-        closes = [float(c) for c in hist["Close"].dropna().tolist()]
-        if len(closes) < 10:
-            return None
-        return closes
-    except Exception as e:
-        log.warning("Yahoo fetch failed for %s: %s", symbol, e)
-        return None
-
-
-async def _fetch_yahoo_series(symbol: str) -> Optional[list[float]]:
-    cache_key = f"yahoo:{symbol}"
+async def _fetch_stooq_series(client: httpx.AsyncClient, symbol: str) -> Optional[list[float]]:
+    """
+    Fetch daily closes for a Stooq symbol as CSV.
+    Stooq returns full history; we take the last ~40 rows for our window.
+    """
+    cache_key = f"stooq:{symbol}"
     cached = cache.get(cache_key)
     if cached is not None:
         return cached
 
-    loop = asyncio.get_event_loop()
-    with ThreadPoolExecutor(max_workers=1) as pool:
-        closes = await loop.run_in_executor(pool, _fetch_yahoo_sync, symbol)
-
-    if closes is None:
+    url = f"https://stooq.com/q/d/l/?s={symbol}&i=d"
+    try:
+        r = await client.get(url, timeout=10.0, headers={
+            "User-Agent": "AnimalSpirits/1.0 (research; https://github.com/super-futures/animal-spirits-api)"
+        })
+        if r.status_code != 200:
+            log.warning("Stooq returned %d for %s", r.status_code, symbol)
+            return None
+        text = r.text
+        # Stooq error responses are small (< 100 chars) or the literal string "No data"
+        if len(text) < 100 or "No data" in text:
+            log.warning("Stooq returned empty/error body for %s: %r", symbol, text[:80])
+            return None
+        # CSV: Date,Open,High,Low,Close,Volume
+        reader = csv.DictReader(StringIO(text))
+        closes = []
+        for row in reader:
+            close_str = row.get("Close", "").strip()
+            if close_str and close_str != "-":
+                try:
+                    closes.append(float(close_str))
+                except ValueError:
+                    pass
+        if len(closes) < 10:
+            log.warning("Stooq returned insufficient data for %s: %d closes", symbol, len(closes))
+            return None
+        # Use last 40 rows for our window
+        closes = closes[-40:]
+        cache.set(cache_key, closes, EQUITY_TTL)
+        return closes
+    except Exception as e:
+        log.warning("Stooq fetch failed for %s: %s", symbol, e)
         return None
-    cache.set(cache_key, closes, EQUITY_TTL)
-    return closes
 
 
 async def _fetch_fred_series(client: httpx.AsyncClient, series_id: str) -> Optional[list[float]]:
@@ -157,7 +166,7 @@ def _stress_scalar(vix: list[float], credit: list[float], dollar: list[float]) -
 async def fetch_market() -> tuple[dict[str, Optional[float]], str]:
     async with httpx.AsyncClient() as client:
         equity_tasks = {
-            region: _fetch_yahoo_series(symbol)
+            region: _fetch_stooq_series(client, symbol)
             for region, symbol in EQUITY_SYMBOLS.items()
         }
         fred_tasks = {
