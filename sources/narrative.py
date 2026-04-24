@@ -1,21 +1,16 @@
 """
 Narrative source: GDELT DOC 2.0 API.
 
-Per-region, we query GDELT for recent news coverage matching affect clusters
-and extract both volume and tone. The composite scalar per region combines:
+Single cluster for v1 — 'anxiety' — because Keynesian animal spirits are
+asymmetric: fear moves faster than confidence. This is the single most
+information-dense cluster for a regime-reading system. Confidence and other
+clusters can be layered in later once the pipeline is stable and GDELT's
+rate-limit budget is better understood.
 
-    sign(average_tone) * magnitude(volume_anomaly)
-
-Where:
-    tone:   GDELT's tone score (roughly -8..+8), averaged across articles
-    volume: article count, compared to 7-day rolling baseline per cluster
-
-Two clusters (anxiety, confidence) instead of four — these capture the
-dominant affective axis cleanly while keeping total request budget low
-enough to finish within the GitHub Actions job timeout.
-
-Rate limit: serialised with ~2s pauses. GDELT's documented limit is 1 req/5s
-but in practice they tolerate 2s spacing; if we see 429s we back off.
+Rate limit: GDELT documents 1 req/5s. We respect it strictly with 5.5s
+pauses; a single cluster × 3 regions × (current + baseline on first run)
+= 6 requests ≈ 90s total for a cold run, well inside the 10-minute job.
+Subsequent runs hit cache for baselines: ~30s.
 
 Output: scalar in (-1, +1) per region. Negative = stress narrative dominant.
 """
@@ -31,11 +26,8 @@ from normalise import tanh_squash, clip
 
 log = logging.getLogger("animal-spirits.narrative")
 
-# Just two clusters — captures the core anxiety ↔ confidence axis.
-# Aspiration and constraint can be re-added later if the job budget permits.
 GDELT_QUERIES = {
-    "anxiety":    '("recession" OR "unemployment" OR "inflation" OR "crisis" OR "layoffs" OR "bankruptcy")',
-    "confidence": '("growth" OR "expansion" OR "bull market" OR "investment" OR "hiring" OR "ipo")',
+    "anxiety": '("recession" OR "unemployment" OR "inflation" OR "crisis" OR "layoffs" OR "bankruptcy")',
 }
 
 COUNTRY_CODES = {
@@ -44,14 +36,14 @@ COUNTRY_CODES = {
     "india": "IN",
 }
 
+# Anxiety cluster pushes the composite negative (stress dominant)
 CLUSTER_WEIGHTS = {
-    "anxiety":    -1.0,
-    "confidence": +1.0,
+    "anxiety": -1.0,
 }
 
-NARRATIVE_TTL = 900   # 15 min — matches GDELT's own update cadence
-BASELINE_TTL  = 3600  # 1 hour — baseline volume can be stale
-REQUEST_PAUSE = 2.0   # seconds between serialised GDELT calls
+NARRATIVE_TTL = 900
+BASELINE_TTL  = 3600
+REQUEST_PAUSE = 5.5
 
 
 async def _gdelt_query(client: httpx.AsyncClient, query: str, country: str,
@@ -74,7 +66,7 @@ async def _gdelt_query(client: httpx.AsyncClient, query: str, country: str,
     try:
         r = await client.get(url, params=params, timeout=15.0)
         if r.status_code != 200:
-            log.debug("GDELT %s %s returned %d", country, timespan, r.status_code)
+            log.warning("GDELT %s %s returned %d", country, timespan, r.status_code)
             return None
         try:
             data = r.json()
@@ -83,7 +75,7 @@ async def _gdelt_query(client: httpx.AsyncClient, query: str, country: str,
         cache.set(cache_key, data, NARRATIVE_TTL)
         return data
     except Exception as e:
-        log.debug("GDELT fetch failed (%s / %s): %s", country, query[:40], e)
+        log.warning("GDELT fetch failed (%s / %s): %s", country, query[:40], e)
         return None
 
 
