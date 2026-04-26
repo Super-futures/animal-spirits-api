@@ -33,7 +33,7 @@
       548.0,
       813.0
     ],
-    "expires_at": 1777186855.0878696
+    "expires_at": 1777198186.012012
   },
   "wiki:Layoff": {
     "value": [
@@ -69,7 +69,7 @@
       254.0,
       243.0
     ],
-    "expires_at": 1777186855.0898206
+    "expires_at": 1777198186.014942
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -105,7 +105,7 @@
       230.0,
       227.0
     ],
-    "expires_at": 1777186855.0931108
+    "expires_at": 1777198186.0129068
   },
   "wiki:Inflation": {
     "value": [
@@ -141,7 +141,7 @@
       1086.0,
       1129.0
     ],
-    "expires_at": 1777186855.0947564
+    "expires_at": 1777198186.0104582
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -177,7 +177,7 @@
       455.0,
       445.0
     ],
-    "expires_at": 1777186855.0896692
+    "expires_at": 1777198186.0093544
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -213,7 +213,7 @@
       765.0,
       530.0
     ],
-    "expires_at": 1777186855.1008377
+    "expires_at": 1777198186.0140367
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -249,7 +249,7 @@
       336.0,
       301.0
     ],
-    "expires_at": 1777186855.0998402
+    "expires_at": 1777198186.0084531
   },
   "wiki:Recession": {
     "value": [
@@ -285,7 +285,7 @@
       456.0,
       466.0
     ],
-    "expires_at": 1777186855.1052175
+    "expires_at": 1777198186.0025465
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -321,7 +321,7 @@
       36.0,
       40.0
     ],
-    "expires_at": 1777186855.1926286
+    "expires_at": 1777198186.1385176
   },
   "wiki:Employment": {
     "value": [
@@ -357,7 +357,7 @@
       395.0,
       432.0
     ],
-    "expires_at": 1777186855.185303
+    "expires_at": 1777198186.130388
   },
   "wiki:Stock": {
     "value": [
@@ -393,7 +393,7 @@
       564.0,
       532.0
     ],
-    "expires_at": 1777186855.1813889
+    "expires_at": 1777198186.3398845
   },
   "wiki:Investment": {
     "value": [
@@ -429,7 +429,7 @@
       488.0,
       455.0
     ],
-    "expires_at": 1777186855.1832218
+    "expires_at": 1777198186.1311467
   },
   "wiki:Economic_growth": {
     "value": [
@@ -465,7 +465,7 @@
       295.0,
       324.0
     ],
-    "expires_at": 1777186855.1846125
+    "expires_at": 1777198186.3521593
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -501,7 +501,7 @@
       1140.0,
       1132.0
     ],
-    "expires_at": 1777186855.1839077
+    "expires_at": 1777198186.1291215
   },
   "wiki:Bull_market": {
     "value": [
@@ -537,7 +537,7 @@
       40.0,
       32.0
     ],
-    "expires_at": 1777186855.188497
+    "expires_at": 1777198186.3418522
   },
   "wiki:Venture_capital": {
     "value": [
@@ -573,7 +573,7 @@
       1234.0,
       1100.0
     ],
-    "expires_at": 1777186855.1989481
+    "expires_at": 1777198186.1326675
   },
   "wiki:Cryptocurrency": {
     "value": [
@@ -609,7 +609,7 @@
       2757.0,
       2877.0
     ],
-    "expires_at": 1777186855.3445327
+    "expires_at": 1777198186.4730022
   },
   "wiki:Travel": {
     "value": [
@@ -645,7 +645,7 @@
       538.0,
       451.0
     ],
-    "expires_at": 1777186855.276161
+    "expires_at": 1777198186.4739516
   },
   "wiki:Sports_car": {
     "value": [
@@ -681,7 +681,7 @@
       787.0,
       736.0
     ],
-    "expires_at": 1777186855.2782006
+    "expires_at": 1777198186.4709296
   },
   "wiki:Fine_dining": {
     "value": [
@@ -717,7 +717,7 @@
       121.0,
       169.0
     ],
-    "expires_at": 1777186855.2752929
+    "expires_at": 1777198186.4651968
   },
   "wiki:Yacht": {
     "value": [
@@ -753,7 +753,7 @@
       463.0,
       510.0
     ],
-    "expires_at": 1777186855.2846336
+    "expires_at": 1777198186.4747567
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -789,7 +789,7 @@
       312.0,
       318.0
     ],
-    "expires_at": 1777186855.280937
+    "expires_at": 1777198186.475556
   },
   "wiki:Private_jet": {
     "value": [
@@ -825,7 +825,7 @@
       41.0,
       44.0
     ],
-    "expires_at": 1777186855.286225
+    "expires_at": 1777198186.4719193
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -889,7 +889,7 @@
       118.3616,
       118.0795
     ],
-    "expires_at": 1777188655.3175552
+    "expires_at": 1777199986.0530307
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -954,7 +954,7 @@
       2.84,
       2.86
     ],
-    "expires_at": 1777188655.3213556
+    "expires_at": 1777199986.0635128
   },
   "wiki:Real_estate": {
     "value": [
@@ -990,7 +990,7 @@
       2741.0,
       2950.0
     ],
-    "expires_at": 1777186855.2874556
+    "expires_at": 1777198186.4691608
   },
   "wiki:Debt": {
     "value": [
@@ -1026,7 +1026,7 @@
       373.0,
       310.0
     ],
-    "expires_at": 1777186855.4247835
+    "expires_at": 1777198186.590517
   },
   "wiki:Poverty": {
     "value": [
@@ -1062,7 +1062,7 @@
       766.0,
       602.0
     ],
-    "expires_at": 1777186855.4210048
+    "expires_at": 1777198186.5889003
   },
   "wiki:Minimum_wage": {
     "value": [
@@ -1098,7 +1098,7 @@
       371.0,
       363.0
     ],
-    "expires_at": 1777186855.4168026
+    "expires_at": 1777198186.592831
   },
   "wiki:Frugality": {
     "value": [
@@ -1134,7 +1134,7 @@
       145.0,
       153.0
     ],
-    "expires_at": 1777186855.4303029
+    "expires_at": 1777198186.6023383
   },
   "wiki:Budget": {
     "value": [
@@ -1170,7 +1170,7 @@
       370.0,
       522.0
     ],
-    "expires_at": 1777186855.4383087
+    "expires_at": 1777198186.591924
   },
   "wiki:Student_debt": {
     "value": [
@@ -1206,7 +1206,7 @@
       50.0,
       50.0
     ],
-    "expires_at": 1777186855.4261882
+    "expires_at": 1777198186.5903788
   },
   "wiki:Food_insecurity": {
     "value": [
@@ -1242,7 +1242,7 @@
       22.0,
       22.0
     ],
-    "expires_at": 1777186855.4260418
+    "expires_at": 1777198186.6159759
   },
   "wiki:Homelessness": {
     "value": [
@@ -1278,7 +1278,7 @@
       437.0,
       408.0
     ],
-    "expires_at": 1777186855.429552
+    "expires_at": 1777198186.592073
   },
   "wiki:Redundancy_(law)": {
     "value": [
@@ -1307,7 +1307,7 @@
       3.0,
       1.0
     ],
-    "expires_at": 1777186855.5100627
+    "expires_at": 1777198186.744575
   },
   "wiki:Cost_of_living_crisis": {
     "value": [
@@ -1343,7 +1343,7 @@
       6.0,
       4.0
     ],
-    "expires_at": 1777186855.5235624
+    "expires_at": 1777198186.7283974
   },
   "wiki:Gross_domestic_product": {
     "value": [
@@ -1379,7 +1379,7 @@
       3181.0,
       3131.0
     ],
-    "expires_at": 1777186855.6093693
+    "expires_at": 1777198186.8573554
   },
   "wiki:Property": {
     "value": [
@@ -1415,7 +1415,7 @@
       471.0,
       674.0
     ],
-    "expires_at": 1777186855.6894283
+    "expires_at": 1777198186.9861684
   },
   "wiki:Food_bank": {
     "value": [
@@ -1451,7 +1451,7 @@
       162.0,
       135.0
     ],
-    "expires_at": 1777186855.761892
+    "expires_at": 1777198187.096741
   },
   "wiki:Cost_of_living": {
     "value": [
@@ -1487,7 +1487,7 @@
       174.0,
       143.0
     ],
-    "expires_at": 1777186855.766407
+    "expires_at": 1777198187.105958
   },
   "wiki:Universal_Credit": {
     "value": [
@@ -1523,7 +1523,7 @@
       163.0,
       128.0
     ],
-    "expires_at": 1777186855.7606754
+    "expires_at": 1777198187.1020515
   },
   "wiki:Austerity": {
     "value": [
@@ -1559,7 +1559,7 @@
       405.0,
       390.0
     ],
-    "expires_at": 1777186855.7638106
+    "expires_at": 1777198187.0953538
   },
   "wiki:Poverty_in_India": {
     "value": [
@@ -1595,7 +1595,7 @@
       429.0,
       383.0
     ],
-    "expires_at": 1777186855.8425112
+    "expires_at": 1777198187.2263541
   },
   "wiki:Unemployment_in_India": {
     "value": [
@@ -1631,7 +1631,7 @@
       95.0,
       81.0
     ],
-    "expires_at": 1777186855.8462012
+    "expires_at": 1777198187.218493
   },
   "wiki:Entrepreneurship": {
     "value": [
@@ -1667,7 +1667,7 @@
       1246.0,
       957.0
     ],
-    "expires_at": 1777186855.9292235
+    "expires_at": 1777198187.3574295
   },
   "wiki:Tourism": {
     "value": [
@@ -1703,7 +1703,7 @@
       706.0,
       657.0
     ],
-    "expires_at": 1777186856.01359
+    "expires_at": 1777198187.4775589
   },
   "wiki:Gold_as_an_investment": {
     "value": [
@@ -1739,7 +1739,7 @@
       419.0,
       373.0
     ],
-    "expires_at": 1777186856.001867
+    "expires_at": 1777198187.4698741
   },
   "wiki:Food_security": {
     "value": [
@@ -1775,7 +1775,7 @@
       353.0,
       275.0
     ],
-    "expires_at": 1777186856.0889337
+    "expires_at": 1777198187.6106975
   },
   "wiki:Microfinance": {
     "value": [
@@ -1811,7 +1811,7 @@
       209.0,
       193.0
     ],
-    "expires_at": 1777186856.092511
+    "expires_at": 1777198187.5884473
   },
   "av:SPY": {
     "value": [
@@ -2129,8 +2129,8 @@
     "expires_at": 1777206679.8629804
   },
   "gdelt_tone:US": {
-    "value": -3.6171,
-    "expires_at": 1777185987.5142677
+    "value": -2.4172,
+    "expires_at": 1777197333.9211903
   },
   "fred:VIXCLS": {
     "value": [
@@ -2194,14 +2194,14 @@
       18.92,
       19.31
     ],
-    "expires_at": 1777188655.3141778
+    "expires_at": 1777199986.0653424
   },
   "gdelt_tone:UK": {
-    "value": -1.6267,
-    "expires_at": 1777186005.3743186
+    "value": -0.2348,
+    "expires_at": 1777197355.484423
   },
   "gdelt_tone:IN": {
-    "value": -2.36,
-    "expires_at": 1777186082.8293142
+    "value": -4.2275,
+    "expires_at": 1777197376.6946855
   }
 }
