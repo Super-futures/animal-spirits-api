@@ -6,7 +6,9 @@
 
 ## What it does
 
-A scheduled GitHub Actions workflow that fetches, normalises, and composes three economic affect signals — attention, market, and narrative — across US/Europe, UK, and India. Output is written to `data/state.json` and served via GitHub Pages with permissive CORS headers, allowing the frontend to make a single fetch.
+A scheduled GitHub Actions workflow that fetches, normalises, and composes three economic affect signals — attention, market, and narrative — across US, UK, and India. Output is written to `data/state.json` and served via GitHub Pages with permissive CORS headers, allowing the frontend to make a single fetch.
+
+The backend serves raw normalised signals only. All coupling metrics (C_align, C_sync, C_lag, I) and regime classification are computed in the frontend's signal processing layer.
 
 ---
 
@@ -112,18 +114,18 @@ The workflow uses a bot commit identity (`animal-spirits-bot`) to avoid pollutin
 
 ## v3 directions
 
-- **Cluster vector exposure** — currently the four attention clusters are combined into a scalar before writing to `state.json`. Exposing the full cluster vector `{ anxiety, confidence, aspiration, constraint }` per region would allow the frontend to compute expressive divergence directly from source rather than approximating it from E components.
+- **Cluster vector exposure** — currently the four attention clusters are combined into a scalar before writing to `state.json`. Exposing the full cluster vector `{ anxiety, confidence, aspiration, constraint }` per region would allow the frontend to compute expressive divergence directly from source rather than approximating it from composite components.
 - **Rolling attention baseline** — replace the fixed 50,000 normalisation threshold with a 30-day rolling baseline per term, making attention readings relative to recent history rather than absolute pageview counts.
 - **Google Trends Alpha** — institutional API access would provide higher-frequency, query-specific attention signals as an alternative or supplement to Wikimedia pageviews.
 - **Narrative cluster weighting** — currently a single GDELT query per region covers all economic stress terms. Separate queries per affect cluster (anxiety terms vs confidence terms) would allow narrative to be decomposed by affect valence rather than aggregated.
+- **Historical state log** — append each refresh tick to a `history.jsonl` file alongside `state.json`, retaining a 90-day rolling window. Enables frontend trajectory analysis, dwell-time computation, and lead-lag stability evaluation.
 
 ---
 
 ## Related
 
 - **Frontend:** [Super-futures/animalspirits](https://github.com/Super-futures/animalspirits) — `super-futures.github.io/animalspirits`
-- **Theoretical framing:** see frontend README
 
 ---
 
-*Superfutures · v2.0*
+*Superfutures · v2.2*
