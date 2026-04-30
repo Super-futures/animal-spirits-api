@@ -1,24 +1,19 @@
 """
 Animal Spirits — scheduled state composer.
-
 Runs once per invocation (via GitHub Actions cron), composes the unified
 field state from all three sources, and writes data/state.json.
-
 No server, no cold start, no continuous billing — just a function
 that produces a static artefact on a schedule.
-
 The frontend polls the raw JSON file from GitHub Pages (or the raw.
 githubusercontent.com CDN), which is instant and free.
 """
-
 import asyncio
 import json
 import logging
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
-
 from sources.market import fetch_market
 from sources.attention import fetch_attention
 from sources.narrative import fetch_narrative
@@ -32,6 +27,7 @@ log = logging.getLogger("animal-spirits")
 
 REGIONS = ("us", "uk", "india")
 OUTPUT_PATH = Path(__file__).parent / "data" / "state.json"
+HISTORY_PATH = Path(__file__).parent / "data" / "history.jsonl"
 
 
 async def _safe_source(coro, name: str):
@@ -46,10 +42,41 @@ async def _safe_source(coro, name: str):
         return {r: None for r in REGIONS}, "simulated"
 
 
-async def compose_and_write() -> dict:
-    """Compose state and write to data/state.json."""
-    log.info("Starting state composition...")
+def _prune_history(history_path: Path):
+    """Keep only last 90 days of history.jsonl"""
+    if not history_path.exists():
+        return
+    
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=90)
+    
+    try:
+        lines = history_path.read_text().strip().split('\n')
+        lines = [l for l in lines if l.strip()]  # Remove empty lines
+    except Exception as e:
+        log.warning("Failed to read history.jsonl: %s", e)
+        return
+    
+    recent_lines = []
+    for line in lines:
+        try:
+            entry = json.loads(line)
+            entry_time = datetime.fromisoformat(entry['timestamp'])
+            if entry_time > cutoff_date:
+                recent_lines.append(line)
+        except Exception as e:
+            log.warning("Failed to parse history line: %s", e)
+    
+    try:
+        history_path.write_text('\n'.join(recent_lines) + '\n' if recent_lines else '')
+        log.info("Pruned history.jsonl to %d entries (90 days)", len(recent_lines))
+    except Exception as e:
+        log.warning("Failed to write pruned history.jsonl: %s", e)
 
+
+async def compose_and_write() -> dict:
+    """Compose state and write to data/state.json and data/history.jsonl."""
+    log.info("Starting state composition...")
+    
     # Parallel fetch across all three axes
     (market_data,    market_status), \
     (attention_data, attention_status), \
@@ -58,7 +85,7 @@ async def compose_and_write() -> dict:
         _safe_source(fetch_attention(), "attention"),
         _safe_source(fetch_narrative(), "narrative"),
     )
-
+    
     regions_out: dict[str, dict[str, Optional[float]]] = {}
     for r in REGIONS:
         regions_out[r] = {
@@ -66,7 +93,7 @@ async def compose_and_write() -> dict:
             "market":    market_data.get(r),
             "narrative": narrative_data.get(r),
         }
-
+    
     state = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "regions": regions_out,
@@ -76,22 +103,39 @@ async def compose_and_write() -> dict:
             "narrative": narrative_status,
         },
     }
-
-    # Ensure output directory exists and write
+    
+    # Ensure output directory exists and write state.json
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(state, indent=2))
     log.info("Wrote state to %s", OUTPUT_PATH)
-
+    
+    # Append to history.jsonl
+    with open(HISTORY_PATH, 'a') as f:
+        timestamp = state['timestamp']
+        for region in REGIONS:
+            entry = {
+                'timestamp': timestamp,
+                'region': region,
+                'A': state['regions'][region]['attention'],
+                'M': state['regions'][region]['market'],
+                'N': state['regions'][region]['narrative']
+            }
+            f.write(json.dumps(entry) + '\n')
+    log.info("Appended to history.jsonl")
+    
+    # Prune history to keep only last 90 days
+    _prune_history(HISTORY_PATH)
+    
     # Persist cache for next run (rolling baselines survive across invocations)
     cache.flush()
     log.info("Flushed cache with %d active keys", len(cache.keys()))
-
+    
     # Log a summary
     log.info("State summary:")
     log.info("  meta: %s", state["meta"])
     for r, axes in state["regions"].items():
         log.info("  %s: %s", r, {k: (f"{v:+.3f}" if isinstance(v, (int, float)) else v) for k, v in axes.items()})
-
+    
     return state
 
 
