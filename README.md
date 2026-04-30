@@ -6,7 +6,7 @@
 
 ## What it does
 
-A scheduled GitHub Actions workflow that fetches, normalises, and composes three economic affect signals — attention, market, and narrative — across US, UK, and India. Output is written to `data/state.json` and served via GitHub Pages with permissive CORS headers, allowing the frontend to make a single fetch.
+A scheduled GitHub Actions workflow that fetches, normalises, and composes three economic affect signals — attention, market, and narrative — across US, UK, and India. Output is written to `data/state.json` and `data/history.jsonl`, both served via GitHub Pages with permissive CORS headers.
 
 The backend serves raw normalised signals only. All coupling metrics (C_align, C_sync, C_lag, I) and regime classification are computed in the frontend's signal processing layer.
 
@@ -14,11 +14,15 @@ The backend serves raw normalised signals only. All coupling metrics (C_align, C
 
 ## Output
 
-`data/state.json` — updated on schedule by the workflow:
+The workflow generates two files in `data/`:
+
+### state.json
+
+Updated on every refresh (hourly by default). Latest snapshot of all three regions' A/M/N values:
 
 ```json
 {
-  "timestamp": "2026-04-25T07:52:59.536930+00:00",
+  "timestamp": "2026-05-01T09:50:29.536930+00:00",
   "regions": {
     "us":    { "attention": 0.063, "market": 0.191, "narrative": -0.545 },
     "uk":    { "attention": 0.022, "market": -0.010, "narrative": 0.188 },
@@ -35,6 +39,20 @@ The backend serves raw normalised signals only. All coupling metrics (C_align, C
 All values are signed and normalised. Narrative is negative under stress, positive under relief. Meta reports live/simulated status per axis.
 
 **Served at:** `https://super-futures.github.io/animal-spirits-api/data/state.json`
+
+### history.jsonl
+
+A rolling log of all state snapshots, one JSON object per line. Retains 90 days of history automatically. Example lines:
+
+```json
+{"timestamp": "2026-05-01T09:50:29.123456+00:00", "region": "us", "A": 0.063, "M": 0.191, "N": -0.545}
+{"timestamp": "2026-05-01T09:50:29.123456+00:00", "region": "uk", "A": 0.022, "M": -0.010, "N": 0.188}
+{"timestamp": "2026-05-01T09:50:29.123456+00:00", "region": "india", "A": -0.009, "M": 0.065, "N": -0.408}
+```
+
+Enables trajectory analysis, dwell-time computation, and lead-lag stability evaluation over time.
+
+**Served at:** `https://super-futures.github.io/animal-spirits-api/data/history.jsonl`
 
 ---
 
@@ -83,20 +101,21 @@ run.py
 ├── market.py     — Alpha Vantage + FRED fetches, composite computation
 ├── sentiment.py  — Wikimedia pageview fetches, RMS aggregation
 ├── narrative.py  — GDELT TimelineTone fetches, tone normalisation
-└── state.py      — Composition, normalisation, state.json write
+└── state.py      — Composition, normalisation, state.json + history.jsonl write
 ```
 
 ---
 
 ## Workflow
 
-`.github/workflows/refresh.yml` — runs on schedule (hourly or as configured).
+`.github/workflows/refresh.yml` — runs on schedule (every 15 minutes by default, or manually triggered).
 
 Steps:
 1. Fetch all signals in parallel where possible
-2. Compose `state.json` with timestamp and meta
-3. Commit and push to `main`
-4. GitHub Pages serves the updated file
+2. Compose state.json with timestamp and meta
+3. Append to history.jsonl (one line per region)
+4. Prune history.jsonl to retain only last 90 days
+5. Commit and push both files to main
 
 The workflow uses a bot commit identity (`animal-spirits-bot`) to avoid polluting the commit history with authored commits.
 
@@ -118,7 +137,6 @@ The workflow uses a bot commit identity (`animal-spirits-bot`) to avoid pollutin
 - **Rolling attention baseline** — replace the fixed 50,000 normalisation threshold with a 30-day rolling baseline per term, making attention readings relative to recent history rather than absolute pageview counts.
 - **Google Trends Alpha** — institutional API access would provide higher-frequency, query-specific attention signals as an alternative or supplement to Wikimedia pageviews.
 - **Narrative cluster weighting** — currently a single GDELT query per region covers all economic stress terms. Separate queries per affect cluster (anxiety terms vs confidence terms) would allow narrative to be decomposed by affect valence rather than aggregated.
-- **Historical state log** — append each refresh tick to a `history.jsonl` file alongside `state.json`, retaining a 90-day rolling window. Enables frontend trajectory analysis, dwell-time computation, and lead-lag stability evaluation.
 
 ---
 
