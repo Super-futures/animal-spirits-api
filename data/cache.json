@@ -348,7 +348,7 @@
       256.0,
       243.0
     ],
-    "expires_at": 1778962518.951704
+    "expires_at": 1778965576.7061243
   },
   "wiki:Unemployment": {
     "value": [
@@ -384,7 +384,7 @@
       833.0,
       679.0
     ],
-    "expires_at": 1778962518.9495535
+    "expires_at": 1778965576.7217789
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -420,7 +420,7 @@
       350.0,
       372.0
     ],
-    "expires_at": 1778962518.9605854
+    "expires_at": 1778965576.7190669
   },
   "wiki:Inflation": {
     "value": [
@@ -456,7 +456,7 @@
       1289.0,
       1301.0
     ],
-    "expires_at": 1778962518.9561713
+    "expires_at": 1778965576.7226899
   },
   "wiki:Recession": {
     "value": [
@@ -492,7 +492,7 @@
       509.0,
       497.0
     ],
-    "expires_at": 1778962518.9533832
+    "expires_at": 1778965576.726214
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -528,7 +528,7 @@
       518.0,
       607.0
     ],
-    "expires_at": 1778962518.9580164
+    "expires_at": 1778965576.7124186
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -564,7 +564,7 @@
       505.0,
       544.0
     ],
-    "expires_at": 1778962518.9543195
+    "expires_at": 1778965576.727102
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -600,7 +600,7 @@
       279.0,
       271.0
     ],
-    "expires_at": 1778962518.9552495
+    "expires_at": 1778965576.7252326
   },
   "fred:VIXCLS": {
     "value": [
@@ -795,10 +795,6 @@
     ],
     "expires_at": 1778964318.9844294
   },
-  "gdelt_tone:IN": {
-    "value": -0.7415,
-    "expires_at": 1778961729.6174533
-  },
   "wiki:Bull_market": {
     "value": [
       26.0,
@@ -833,11 +829,11 @@
       33.0,
       39.0
     ],
-    "expires_at": 1778962518.99171
+    "expires_at": 1778965576.7551146
   },
   "gdelt_tone:UK": {
-    "value": -0.3924,
-    "expires_at": 1778961682.4241874
+    "value": -1.4525,
+    "expires_at": 1778964742.604377
   },
   "wiki:Economic_growth": {
     "value": [
@@ -873,6 +869,10 @@
       314.0,
       323.0
     ],
-    "expires_at": 1778962518.99386
+    "expires_at": 1778965576.7533264
+  },
+  "gdelt_tone:US": {
+    "value": -1.2855,
+    "expires_at": 1778964708.719375
   }
 }
