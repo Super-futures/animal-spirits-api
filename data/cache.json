@@ -348,7 +348,7 @@
       256.0,
       243.0
     ],
-    "expires_at": 1778948109.577604
+    "expires_at": 1778951263.4143271
   },
   "wiki:Unemployment": {
     "value": [
@@ -384,7 +384,7 @@
       833.0,
       679.0
     ],
-    "expires_at": 1778948109.589028
+    "expires_at": 1778951263.738617
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -420,7 +420,7 @@
       350.0,
       372.0
     ],
-    "expires_at": 1778948109.588174
+    "expires_at": 1778951263.418404
   },
   "wiki:Inflation": {
     "value": [
@@ -456,7 +456,7 @@
       1289.0,
       1301.0
     ],
-    "expires_at": 1778948109.6449459
+    "expires_at": 1778951263.4087596
   },
   "wiki:Recession": {
     "value": [
@@ -492,7 +492,7 @@
       509.0,
       497.0
     ],
-    "expires_at": 1778948109.5849357
+    "expires_at": 1778951263.4134102
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -528,7 +528,7 @@
       518.0,
       607.0
     ],
-    "expires_at": 1778948109.583565
+    "expires_at": 1778951263.4070346
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -564,7 +564,7 @@
       505.0,
       544.0
     ],
-    "expires_at": 1778948109.581994
+    "expires_at": 1778951263.417491
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -600,7 +600,7 @@
       279.0,
       271.0
     ],
-    "expires_at": 1778948109.5906248
+    "expires_at": 1778951263.4371238
   },
   "fred:VIXCLS": {
     "value": [
@@ -829,11 +829,11 @@
       314.0,
       323.0
     ],
-    "expires_at": 1778948109.731547
+    "expires_at": 1778951263.7692125
   },
   "gdelt_tone:IN": {
-    "value": -2.5096,
-    "expires_at": 1778947326.4127553
+    "value": -2.0715,
+    "expires_at": 1778950448.0101693
   },
   "wiki:Bull_market": {
     "value": [
@@ -869,10 +869,10 @@
       33.0,
       39.0
     ],
-    "expires_at": 1778948109.7191155
+    "expires_at": 1778951263.7699697
   },
-  "gdelt_tone:UK": {
-    "value": 0.0209,
-    "expires_at": 1778947291.0172725
+  "gdelt_tone:US": {
+    "value": -2.4508,
+    "expires_at": 1778950386.8812666
   }
 }
