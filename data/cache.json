@@ -348,7 +348,7 @@
       243.0,
       196.0
     ],
-    "expires_at": 1779045047.1750112
+    "expires_at": 1779049062.2337317
   },
   "wiki:Unemployment": {
     "value": [
@@ -384,7 +384,7 @@
       679.0,
       575.0
     ],
-    "expires_at": 1779045047.3367054
+    "expires_at": 1779049062.2325747
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -420,7 +420,7 @@
       372.0,
       350.0
     ],
-    "expires_at": 1779045047.185171
+    "expires_at": 1779049062.2296233
   },
   "wiki:Inflation": {
     "value": [
@@ -456,7 +456,7 @@
       1301.0,
       1094.0
     ],
-    "expires_at": 1779045047.1850016
+    "expires_at": 1779049062.223936
   },
   "wiki:Recession": {
     "value": [
@@ -492,7 +492,7 @@
       497.0,
       447.0
     ],
-    "expires_at": 1779045047.18483
+    "expires_at": 1779049062.2285779
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -528,7 +528,7 @@
       607.0,
       502.0
     ],
-    "expires_at": 1779045047.1928587
+    "expires_at": 1779049062.2269158
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -564,7 +564,7 @@
       544.0,
       397.0
     ],
-    "expires_at": 1779045047.1820993
+    "expires_at": 1779049062.2257266
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -600,7 +600,7 @@
       271.0,
       209.0
     ],
-    "expires_at": 1779045047.2006044
+    "expires_at": 1779049062.2351065
   },
   "fred:VIXCLS": {
     "value": [
@@ -664,7 +664,7 @@
       17.87,
       17.26
     ],
-    "expires_at": 1779046847.2340279
+    "expires_at": 1779050862.268899
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -729,7 +729,7 @@
       2.82,
       2.76
     ],
-    "expires_at": 1779046847.1735609
+    "expires_at": 1779050862.2847614
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -793,7 +793,7 @@
       118.0116,
       118.0392
     ],
-    "expires_at": 1779046847.143701
+    "expires_at": 1779050862.301256
   },
   "wiki:Bull_market": {
     "value": [
@@ -829,7 +829,7 @@
       39.0,
       38.0
     ],
-    "expires_at": 1779045047.4360366
+    "expires_at": 1779049062.348823
   },
   "wiki:Economic_growth": {
     "value": [
@@ -865,10 +865,18 @@
       323.0,
       356.0
     ],
-    "expires_at": 1779045047.4483328
+    "expires_at": 1779049062.3453379
   },
   "gdelt_tone:UK": {
-    "value": -2.007,
-    "expires_at": 1779044238.2146716
+    "value": -2.597,
+    "expires_at": 1779048272.640731
+  },
+  "gdelt_tone:US": {
+    "value": -1.8994,
+    "expires_at": 1779048222.0183551
+  },
+  "gdelt_tone:IN": {
+    "value": -2.5276,
+    "expires_at": 1779048291.5604093
   }
 }
