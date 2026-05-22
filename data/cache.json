@@ -33,7 +33,7 @@
       319.0,
       256.0
     ],
-    "expires_at": 1779488686.653772
+    "expires_at": 1779491827.936671
   },
   "wiki:Unemployment": {
     "value": [
@@ -69,7 +69,7 @@
       731.0,
       813.0
     ],
-    "expires_at": 1779488686.6579983
+    "expires_at": 1779491828.0869339
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -105,7 +105,7 @@
       350.0,
       308.0
     ],
-    "expires_at": 1779488686.6740928
+    "expires_at": 1779491827.9483519
   },
   "wiki:Inflation": {
     "value": [
@@ -141,7 +141,7 @@
       1324.0,
       1201.0
     ],
-    "expires_at": 1779488686.6618197
+    "expires_at": 1779491827.9214976
   },
   "wiki:Recession": {
     "value": [
@@ -177,7 +177,7 @@
       557.0,
       457.0
     ],
-    "expires_at": 1779488686.6547024
+    "expires_at": 1779491827.9348853
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -213,7 +213,7 @@
       618.0,
       606.0
     ],
-    "expires_at": 1779488686.662747
+    "expires_at": 1779491827.9402368
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -249,7 +249,7 @@
       422.0,
       495.0
     ],
-    "expires_at": 1779488686.6563725
+    "expires_at": 1779491827.9440808
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -285,7 +285,7 @@
       380.0,
       333.0
     ],
-    "expires_at": 1779488686.6565263
+    "expires_at": 1779491827.9413435
   },
   "fred:VIXCLS": {
     "value": [
@@ -796,17 +796,9 @@
     ],
     "expires_at": 1779498569.1482105
   },
-  "gdelt_tone:US": {
-    "value": -2.0619,
-    "expires_at": 1779487808.4909742
-  },
-  "gdelt_tone:IN": {
-    "value": 0.6544,
-    "expires_at": 1779487846.7620223
-  },
   "gdelt_tone:UK": {
-    "value": -2.3436,
-    "expires_at": 1779487828.8569133
+    "value": -3.174,
+    "expires_at": 1779491005.246867
   },
   "wiki:Bull_market": {
     "value": [
@@ -842,7 +834,7 @@
       37.0,
       41.0
     ],
-    "expires_at": 1779488686.7046418
+    "expires_at": 1779491828.187119
   },
   "wiki:Economic_growth": {
     "value": [
@@ -878,6 +870,6 @@
       459.0,
       295.0
     ],
-    "expires_at": 1779488686.7036605
+    "expires_at": 1779491828.1831417
   }
 }
