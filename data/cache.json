@@ -271,7 +271,7 @@
       16.06,
       15.4
     ],
-    "expires_at": 1780816280.7481945
+    "expires_at": 1780828428.9785192
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -335,7 +335,7 @@
       119.0318,
       118.8783
     ],
-    "expires_at": 1780816280.7942228
+    "expires_at": 1780828429.0212977
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -400,7 +400,7 @@
       2.75,
       2.74
     ],
-    "expires_at": 1780816280.8625202
+    "expires_at": 1780828428.9667583
   },
   "wiki:Unemployment": {
     "value": [
@@ -436,7 +436,7 @@
       695.0,
       484.0
     ],
-    "expires_at": 1780814480.70285
+    "expires_at": 1780826628.6962128
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -472,7 +472,7 @@
       417.0,
       319.0
     ],
-    "expires_at": 1780814480.7009401
+    "expires_at": 1780826628.7058446
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -508,7 +508,7 @@
       296.0,
       208.0
     ],
-    "expires_at": 1780814480.6962612
+    "expires_at": 1780826628.7069356
   },
   "wiki:Inflation": {
     "value": [
@@ -544,7 +544,7 @@
       1469.0,
       1033.0
     ],
-    "expires_at": 1780814480.6948283
+    "expires_at": 1780826628.7274754
   },
   "wiki:Layoff": {
     "value": [
@@ -580,7 +580,7 @@
       235.0,
       188.0
     ],
-    "expires_at": 1780814480.719333
+    "expires_at": 1780826628.7014873
   },
   "wiki:Recession": {
     "value": [
@@ -616,7 +616,7 @@
       710.0,
       513.0
     ],
-    "expires_at": 1780814480.698866
+    "expires_at": 1780826628.7036676
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -652,7 +652,7 @@
       848.0,
       618.0
     ],
-    "expires_at": 1780814480.7040014
+    "expires_at": 1780826628.7003567
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -688,7 +688,7 @@
       840.0,
       748.0
     ],
-    "expires_at": 1780814480.703036
+    "expires_at": 1780826628.7085836
   },
   "wiki:Bull_market": {
     "value": [
@@ -724,7 +724,7 @@
       29.0,
       25.0
     ],
-    "expires_at": 1780814480.7958868
+    "expires_at": 1780826628.7734654
   },
   "av:NIFTYBEES.BSE": {
     "value": [
@@ -832,8 +832,8 @@
     "expires_at": 1780834305.3837826
   },
   "gdelt_tone:US": {
-    "value": -1.49,
-    "expires_at": 1780813618.4944916
+    "value": -2.4222,
+    "expires_at": 1780825754.7844355
   },
   "wiki:Economic_growth": {
     "value": [
@@ -869,10 +869,6 @@
       621.0,
       504.0
     ],
-    "expires_at": 1780814480.7899606
-  },
-  "gdelt_tone:IN": {
-    "value": -2.1344,
-    "expires_at": 1780813700.1126955
+    "expires_at": 1780826628.7724013
   }
 }
