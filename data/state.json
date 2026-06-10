@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-06-10T08:38:15.124813+00:00",
+  "timestamp": "2026-06-10T11:58:48.090680+00:00",
   "regions": {
     "us": {
       "attention": 0.5325599423075645,
       "market": -0.11403446318787687,
-      "narrative": null
+      "narrative": -0.31862859812281924
     },
     "uk": {
       "attention": 0.575853411357198,
@@ -20,6 +20,6 @@
   "meta": {
     "attention": "live",
     "market": "live",
-    "narrative": "simulated"
+    "narrative": "live"
   }
 }
