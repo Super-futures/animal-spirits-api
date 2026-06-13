@@ -61,7 +61,7 @@
       22.22,
       19.44
     ],
-    "expires_at": 1781356353.7523546
+    "expires_at": 1781364231.7968802
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -125,7 +125,7 @@
       119.3615,
       120.0831
     ],
-    "expires_at": 1781356353.763714
+    "expires_at": 1781364231.8058038
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -190,7 +190,7 @@
       2.8,
       2.78
     ],
-    "expires_at": 1781356353.7957318
+    "expires_at": 1781364231.806639
   },
   "wiki:Unemployment": {
     "value": [
@@ -226,7 +226,7 @@
       642.0,
       603.0
     ],
-    "expires_at": 1781354553.9153216
+    "expires_at": 1781362431.6921103
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -262,7 +262,7 @@
       388.0,
       399.0
     ],
-    "expires_at": 1781354553.9185262
+    "expires_at": 1781362431.70822
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -298,7 +298,7 @@
       300.0,
       268.0
     ],
-    "expires_at": 1781354553.9178052
+    "expires_at": 1781362431.710127
   },
   "wiki:Inflation": {
     "value": [
@@ -334,7 +334,7 @@
       1547.0,
       1236.0
     ],
-    "expires_at": 1781354553.902734
+    "expires_at": 1781362431.702489
   },
   "wiki:Layoff": {
     "value": [
@@ -370,7 +370,7 @@
       222.0,
       216.0
     ],
-    "expires_at": 1781354553.910113
+    "expires_at": 1781362431.7103283
   },
   "wiki:Recession": {
     "value": [
@@ -406,7 +406,7 @@
       472.0,
       449.0
     ],
-    "expires_at": 1781354553.907086
+    "expires_at": 1781362431.7046576
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -442,7 +442,7 @@
       599.0,
       573.0
     ],
-    "expires_at": 1781354553.9108436
+    "expires_at": 1781362431.706247
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -478,7 +478,7 @@
       492.0,
       485.0
     ],
-    "expires_at": 1781354553.911584
+    "expires_at": 1781362431.7913709
   },
   "av:SPY": {
     "value": [
@@ -829,7 +829,7 @@
       532.0,
       422.0
     ],
-    "expires_at": 1781354553.9580832
+    "expires_at": 1781362431.8786335
   },
   "wiki:Bull_market": {
     "value": [
@@ -865,14 +865,14 @@
       46.0,
       32.0
     ],
-    "expires_at": 1781354553.9501357
+    "expires_at": 1781362431.873392
   },
   "gdelt_tone:IN": {
-    "value": -2.4787,
-    "expires_at": 1781353754.63455
+    "value": -1.4214,
+    "expires_at": 1781361647.1170502
   },
-  "gdelt_tone:UK": {
-    "value": 0.4907,
-    "expires_at": 1781353712.2069707
+  "gdelt_tone:US": {
+    "value": -0.2777,
+    "expires_at": 1781361564.825628
   }
 }
