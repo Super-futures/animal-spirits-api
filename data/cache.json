@@ -33,7 +33,7 @@
       268.0,
       265.0
     ],
-    "expires_at": 1784492354.944657
+    "expires_at": 1784495130.628232
   },
   "wiki:Inflation": {
     "value": [
@@ -69,7 +69,7 @@
       1203.0,
       1064.0
     ],
-    "expires_at": 1784492354.9343135
+    "expires_at": 1784495130.6073709
   },
   "wiki:Unemployment": {
     "value": [
@@ -105,7 +105,7 @@
       472.0,
       572.0
     ],
-    "expires_at": 1784492354.9317064
+    "expires_at": 1784495130.6179423
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -648,7 +648,7 @@
       662.0,
       738.0
     ],
-    "expires_at": 1784492354.9331024
+    "expires_at": 1784495130.634323
   },
   "wiki:Economic_growth": {
     "value": [
@@ -684,7 +684,7 @@
       323.0,
       305.0
     ],
-    "expires_at": 1784492354.9803004
+    "expires_at": 1784495130.6799448
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -720,7 +720,7 @@
       217.0,
       197.0
     ],
-    "expires_at": 1784492354.9406261
+    "expires_at": 1784495130.621008
   },
   "wiki:Layoff": {
     "value": [
@@ -756,7 +756,7 @@
       225.0,
       217.0
     ],
-    "expires_at": 1784492354.935477
+    "expires_at": 1784495130.6333652
   },
   "wiki:Bull_market": {
     "value": [
@@ -792,11 +792,7 @@
       37.0,
       24.0
     ],
-    "expires_at": 1784492354.9740677
-  },
-  "gdelt_tone:US": {
-    "value": -1.8069,
-    "expires_at": 1784491516.5912066
+    "expires_at": 1784495130.677672
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -832,15 +828,11 @@
       497.0,
       424.0
     ],
-    "expires_at": 1784492354.9394279
+    "expires_at": 1784495130.6190965
   },
   "gdelt_tone:UK": {
-    "value": 0.0,
-    "expires_at": 1784491554.6770573
-  },
-  "gdelt_tone:IN": {
-    "value": -2.9484,
-    "expires_at": 1784491612.2386632
+    "value": 0.5166,
+    "expires_at": 1784494306.0222597
   },
   "wiki:Recession": {
     "value": [
@@ -876,6 +868,6 @@
       360.0,
       319.0
     ],
-    "expires_at": 1784492354.9366605
+    "expires_at": 1784495130.6291647
   }
 }
