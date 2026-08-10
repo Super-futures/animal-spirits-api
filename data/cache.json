@@ -370,7 +370,7 @@
       544.0,
       605.0
     ],
-    "expires_at": 1786360604.6480138
+    "expires_at": 1786363772.4127364
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -406,7 +406,7 @@
       233.0,
       240.0
     ],
-    "expires_at": 1786360604.6593723
+    "expires_at": 1786363772.4113374
   },
   "wiki:Inflation": {
     "value": [
@@ -442,7 +442,7 @@
       975.0,
       976.0
     ],
-    "expires_at": 1786360604.6401534
+    "expires_at": 1786363772.4074388
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -478,7 +478,7 @@
       264.0,
       255.0
     ],
-    "expires_at": 1786360604.6518128
+    "expires_at": 1786363772.4060647
   },
   "wiki:Economic_growth": {
     "value": [
@@ -514,7 +514,7 @@
       392.0,
       311.0
     ],
-    "expires_at": 1786360604.7039237
+    "expires_at": 1786363772.4963872
   },
   "av:ISF.LON": {
     "value": [
@@ -655,7 +655,7 @@
       195.0,
       186.0
     ],
-    "expires_at": 1786360604.646054
+    "expires_at": 1786363772.4039986
   },
   "wiki:Bull_market": {
     "value": [
@@ -691,7 +691,7 @@
       19.0,
       36.0
     ],
-    "expires_at": 1786360604.7003758
+    "expires_at": 1786363772.4801323
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -727,7 +727,7 @@
       377.0,
       345.0
     ],
-    "expires_at": 1786360604.6534402
+    "expires_at": 1786363772.4115818
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -796,7 +796,7 @@
   },
   "gdelt_tone:US": {
     "value": -1.5789,
-    "expires_at": 1786359772.5635831
+    "expires_at": 1786362891.1332283
   },
   "wiki:Recession": {
     "value": [
@@ -832,7 +832,7 @@
       306.0,
       347.0
     ],
-    "expires_at": 1786360604.634608
+    "expires_at": 1786363772.413704
   },
   "wiki:Unemployment": {
     "value": [
@@ -868,10 +868,10 @@
       410.0,
       450.0
     ],
-    "expires_at": 1786360604.649638
+    "expires_at": 1786363772.405757
   },
   "gdelt_tone:UK": {
     "value": -1.7963,
-    "expires_at": 1786359815.7383153
+    "expires_at": 1786362911.873531
   }
 }
