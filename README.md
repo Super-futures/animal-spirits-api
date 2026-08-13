@@ -38,7 +38,7 @@ Overwritten every run. Latest snapshot of all three regions:
 
 All values are signed, roughly in `(-1, +1)`. A per-axis value may be `null` when that region's fetch failed. Narrative is negative under stress, positive under relief.
 
-**`meta` reports status per axis, not per region.** An axis is marked `live` if *at least one* region returned data. In the example above, `narrative` reads `live` while the UK value is `null`. Consumers wanting per-region provenance must check for `null` directly.
+`meta` reports status per axis, not per region — an axis is marked `live` if at least one region returned data. In the example above `narrative` reads `live` while the UK value is `null`. For per-region provenance, check for `null` directly.
 
 ### `data/history.jsonl`
 
@@ -108,7 +108,7 @@ composite = 0.55 × local_equity + 0.45 × global_stress
 stress = tanh((-0.40·z(vix) − 0.40·z(credit) − 0.20·|z(dollar)|) / 1.5)
 ```
 
-**This backdrop is global and is applied identically to all three regions.** See *Limitations* below.
+This backdrop is global and is applied identically to all three regions.
 
 Cache TTL: 6 hours (equity), 1 hour (FRED). Alpha Vantage calls are issued serially with 12-second gaps to respect the free tier's per-minute limit; the 6-hour TTL is what keeps daily usage (~12 calls) under the 25/day cap, not the refresh cadence.
 
@@ -133,23 +133,19 @@ Cache TTL: 15 minutes. Requests are paced 6 seconds apart with up to 3 attempts 
 
 ---
 
-## Limitations
+## Interpreting the output
 
-These are design constraints, documented rather than resolved.
+Notes required to read `state.json` correctly.
 
-**The market stress backdrop is not regionally differentiated.** All three FRED series are US instruments, and the same stress scalar contributes 45% of every region's market value. Some apparent inter-regional market coupling is therefore a property of the construction rather than an observation. Regionally-specific stress instruments (e.g. RBI rates for India, gilt spreads for the UK) are a v3 direction.
+**Scope of each axis.** Attention is read from `en.wikipedia` for all three regions; other language editions are available through the same API and are not currently sampled. Narrative is restricted to economic stress vocabulary, so N measures the tone of stress discourse rather than general economic media tone. GDELT's `sourcecountry` filter selects by outlet location, not audience or language.
 
-**Equity failure degrades silently.** If an Alpha Vantage fetch fails for a region and FRED succeeded, that region falls back to `stress × 0.6` — a value composed entirely of US macro conditions with no local market input — and the axis still reports `live`. Nothing in the output distinguishes this from a normal reading.
+**Market composition.** The FRED stress backdrop is global and contributes 45% of every region's market value, so the three regional market signals share a common component. If a regional equity fetch fails while FRED succeeds, that region falls back to `stress × 0.6` and continues to report `live`.
 
-**Attention is English-language only.** All three regions are read from `en.wikipedia`. Wikimedia serves Hindi, Bengali, Tamil and other editions through the same API on identical terms; they are not sampled. This is a selection, not an infrastructural constraint, and it means the India attention signal reads an anglophone subset of that population. Multilingual sampling is a v3 direction.
+**Scale.** The `clip → tanh` sequence bounds N at ±0.762, while A and M reach ±1.
 
-**Narrative is anxiety-conditioned by construction.** The GDELT query is restricted to economic stress terms, so N measures the tone of stress discourse rather than general economic media tone. This is deliberate — stress narratives propagate fastest and are the most reactive sub-signal — but it is not a neutral read of media sentiment.
+**Attention is written as a scalar.** The four affect clusters are combined before `state.json` is written; cluster composition is not exposed downstream.
 
-**Narrative cannot reach full scale.** The `clip → tanh` sequence bounds N at ±0.762 while attention and market can reach ±1. The three axes are not on identical scales.
-
-**Attention is a scalar collapse.** Four affect clusters are combined before writing to `state.json`. Cluster composition is not exposed, so the frontend cannot compute expressive divergence from source.
-
-**GDELT country filtering is by outlet location**, not by audience, language, or subject.
+A full account of method and limitations is given in the [methodological note](https://propensities.github.io/animal-spirits/).
 
 ---
 
@@ -183,7 +179,7 @@ Signal acquisition is deliberately thin and replaceable. Richer attention pipeli
 
 The run exits non-zero only when *all three* axes return `simulated`, so CI status reflects genuine outages rather than partial degradation.
 
-**Observed cadence is lower than nominal.** Across 89.9 days (15 May – 13 August 2026, 1,173 refresh events) the median interval between runs was **90 minutes** — roughly 13 events per day, about 14% of the 15-minute schedule. This reflects scheduled-workflow throttling on GitHub Actions rather than source failure; no gap exceeded nine hours and the 90-day window is complete. Observed per-axis availability over the same period: attention 99.9%, market 100%, narrative **50.1%**.
+Observed cadence runs below nominal — a median interval of around 90 minutes, reflecting scheduled-workflow throttling on GitHub Actions rather than source failure. Observed per-axis availability: attention 99.9%, market 100%, narrative 50.1%.
 
 ---
 
