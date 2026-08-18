@@ -540,7 +540,7 @@
       43.0,
       47.0
     ],
-    "expires_at": 1787094478.3610606
+    "expires_at": 1787096743.5577877
   },
   "wiki:Investment": {
     "value": [
@@ -576,7 +576,7 @@
       486.0,
       471.0
     ],
-    "expires_at": 1787094478.3714867
+    "expires_at": 1787096743.5566928
   },
   "wiki:Employment": {
     "value": [
@@ -612,7 +612,7 @@
       357.0,
       414.0
     ],
-    "expires_at": 1787094478.3642712
+    "expires_at": 1787096743.5498557
   },
   "wiki:Venture_capital": {
     "value": [
@@ -648,7 +648,7 @@
       1437.0,
       1267.0
     ],
-    "expires_at": 1787094478.375388
+    "expires_at": 1787096743.5649834
   },
   "wiki:Stock": {
     "value": [
@@ -684,7 +684,7 @@
       600.0,
       918.0
     ],
-    "expires_at": 1787094478.3723772
+    "expires_at": 1787096743.5512137
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -720,7 +720,7 @@
       1462.0,
       1092.0
     ],
-    "expires_at": 1787094478.3660495
+    "expires_at": 1787096743.5524197
   },
   "wiki:Cryptocurrency": {
     "value": [
@@ -756,7 +756,7 @@
       2559.0,
       3043.0
     ],
-    "expires_at": 1787094478.4015405
+    "expires_at": 1787096743.633039
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -792,7 +792,7 @@
       383.0,
       493.0
     ],
-    "expires_at": 1787094478.3951561
+    "expires_at": 1787096743.6462684
   },
   "wiki:Travel": {
     "value": [
@@ -828,7 +828,7 @@
       443.0,
       728.0
     ],
-    "expires_at": 1787094478.3972297
+    "expires_at": 1787096743.6360312
   },
   "wiki:Fine_dining": {
     "value": [
@@ -864,7 +864,7 @@
       116.0,
       118.0
     ],
-    "expires_at": 1787094478.4041233
+    "expires_at": 1787096743.6448076
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -1659,7 +1659,7 @@
     "expires_at": 1787095643.12528
   },
   "gdelt_tone:UK": {
-    "value": -1.7746,
-    "expires_at": 1787094861.195698
+    "value": -1.7973,
+    "expires_at": 1787095951.2633197
   }
 }
