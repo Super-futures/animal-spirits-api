@@ -374,7 +374,7 @@
       119.1848,
       118.9028
     ],
-    "expires_at": 1787140245.9848132
+    "expires_at": 1787144263.8179853
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -439,7 +439,7 @@
       2.67,
       2.7
     ],
-    "expires_at": 1787140246.0109036
+    "expires_at": 1787144263.7511435
   },
   "wiki:Inflation": {
     "value": [
@@ -833,7 +833,7 @@
       918.0,
       663.0
     ],
-    "expires_at": 1787139785.1308594
+    "expires_at": 1787142463.6741447
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -869,7 +869,7 @@
       47.0,
       20.0
     ],
-    "expires_at": 1787139785.1317184
+    "expires_at": 1787142463.6831658
   },
   "wiki:Investment": {
     "value": [
@@ -905,7 +905,7 @@
       471.0,
       560.0
     ],
-    "expires_at": 1787139785.1329167
+    "expires_at": 1787142463.6885576
   },
   "wiki:Venture_capital": {
     "value": [
@@ -941,7 +941,7 @@
       1267.0,
       1359.0
     ],
-    "expires_at": 1787139785.1375706
+    "expires_at": 1787142463.6853912
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -977,7 +977,7 @@
       1092.0,
       1052.0
     ],
-    "expires_at": 1787139785.1384258
+    "expires_at": 1787142463.673062
   },
   "wiki:Employment": {
     "value": [
@@ -1013,7 +1013,7 @@
       414.0,
       400.0
     ],
-    "expires_at": 1787139785.1392784
+    "expires_at": 1787142463.6895056
   },
   "wiki:Travel": {
     "value": [
@@ -1049,7 +1049,7 @@
       728.0,
       537.0
     ],
-    "expires_at": 1787139785.175115
+    "expires_at": 1787142463.7749324
   },
   "wiki:Sports_car": {
     "value": [
@@ -1085,7 +1085,7 @@
       519.0,
       500.0
     ],
-    "expires_at": 1787139785.176118
+    "expires_at": 1787142463.7768576
   },
   "wiki:Fine_dining": {
     "value": [
@@ -1121,7 +1121,7 @@
       118.0,
       147.0
     ],
-    "expires_at": 1787139785.185627
+    "expires_at": 1787142463.7759311
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -1157,7 +1157,7 @@
       493.0,
       501.0
     ],
-    "expires_at": 1787139785.185846
+    "expires_at": 1787142463.7903843
   },
   "wiki:Cryptocurrency": {
     "value": [
@@ -1619,5 +1619,13 @@
       15.19
     ],
     "expires_at": 1787143067.4134305
+  },
+  "gdelt_tone:US": {
+    "value": -0.8593,
+    "expires_at": 1787141624.1875288
+  },
+  "gdelt_tone:UK": {
+    "value": -0.2947,
+    "expires_at": 1787141666.9327245
   }
 }
