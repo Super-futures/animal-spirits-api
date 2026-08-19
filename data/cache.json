@@ -377,7 +377,7 @@
       15.19,
       15.84
     ],
-    "expires_at": 1787183196.2628117
+    "expires_at": 1787187343.4628913
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -442,7 +442,7 @@
       2.7,
       2.75
     ],
-    "expires_at": 1787183196.245486
+    "expires_at": 1787187343.4168625
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -504,7 +504,7 @@
       119.1848,
       118.9028
     ],
-    "expires_at": 1787183196.337023
+    "expires_at": 1787187343.4532752
   },
   "wiki:Bull_market": {
     "value": [
@@ -864,7 +864,7 @@
       269.0,
       206.0
     ],
-    "expires_at": 1787182903.1774535
+    "expires_at": 1787185543.2347791
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -900,7 +900,7 @@
       704.0,
       879.0
     ],
-    "expires_at": 1787182903.1801107
+    "expires_at": 1787185543.2542198
   },
   "wiki:Unemployment": {
     "value": [
@@ -936,7 +936,7 @@
       478.0,
       463.0
     ],
-    "expires_at": 1787182903.180356
+    "expires_at": 1787185543.2354531
   },
   "wiki:Inflation": {
     "value": [
@@ -972,7 +972,7 @@
       1071.0,
       879.0
     ],
-    "expires_at": 1787182903.1839323
+    "expires_at": 1787185543.2496436
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -1008,7 +1008,7 @@
       538.0,
       577.0
     ],
-    "expires_at": 1787182903.1842515
+    "expires_at": 1787185543.2320757
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -1044,7 +1044,7 @@
       301.0,
       239.0
     ],
-    "expires_at": 1787182903.1846035
+    "expires_at": 1787185543.2655933
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -1080,7 +1080,7 @@
       317.0,
       269.0
     ],
-    "expires_at": 1787182903.1865892
+    "expires_at": 1787185543.225073
   },
   "wiki:Recession": {
     "value": [
@@ -1116,7 +1116,7 @@
       419.0,
       548.0
     ],
-    "expires_at": 1787182903.1894639
+    "expires_at": 1787185543.2572956
   },
   "wiki:Economic_growth": {
     "value": [
@@ -1152,7 +1152,7 @@
       383.0,
       397.0
     ],
-    "expires_at": 1787182903.25403
+    "expires_at": 1787185543.3073697
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -1188,7 +1188,7 @@
       1092.0,
       1052.0
     ],
-    "expires_at": 1787182903.2581406
+    "expires_at": 1787185543.302812
   },
   "wiki:Fine_dining": {
     "value": [
@@ -1226,8 +1226,8 @@
     ],
     "expires_at": 1787184245.2661214
   },
-  "gdelt_tone:UK": {
-    "value": 0.203,
-    "expires_at": 1787183450.135488
+  "gdelt_tone:IN": {
+    "value": -2.0323,
+    "expires_at": 1787184795.8234367
   }
 }
