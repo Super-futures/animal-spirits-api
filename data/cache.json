@@ -439,7 +439,7 @@
       2.73,
       2.75
     ],
-    "expires_at": 1787335194.957524
+    "expires_at": 1787339919.1596828
   },
   "fred:VIXCLS": {
     "value": [
@@ -504,11 +504,11 @@
       14.89,
       16.01
     ],
-    "expires_at": 1787335194.996707
+    "expires_at": 1787339919.3005984
   },
   "gdelt_tone:US": {
     "value": -3.0322,
-    "expires_at": 1787335852.8873813
+    "expires_at": 1787337247.6321352
   },
   "wiki:Venture_capital": {
     "value": [
@@ -544,7 +544,7 @@
       1265.0,
       1233.0
     ],
-    "expires_at": 1787335098.825123
+    "expires_at": 1787338119.0488877
   },
   "wiki:Investment": {
     "value": [
@@ -580,7 +580,7 @@
       515.0,
       582.0
     ],
-    "expires_at": 1787335098.8332362
+    "expires_at": 1787338119.0412855
   },
   "wiki:Employment": {
     "value": [
@@ -616,7 +616,7 @@
       460.0,
       392.0
     ],
-    "expires_at": 1787335098.8343704
+    "expires_at": 1787338119.0331655
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -652,7 +652,7 @@
       33.0,
       33.0
     ],
-    "expires_at": 1787335098.8356295
+    "expires_at": 1787338119.0376005
   },
   "wiki:Stock": {
     "value": [
@@ -688,7 +688,7 @@
       547.0,
       580.0
     ],
-    "expires_at": 1787335098.840707
+    "expires_at": 1787338119.038768
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -724,7 +724,7 @@
       1119.0,
       1061.0
     ],
-    "expires_at": 1787335098.8443823
+    "expires_at": 1787338119.0276911
   },
   "wiki:Cryptocurrency": {
     "value": [
@@ -760,7 +760,7 @@
       2959.0,
       3634.0
     ],
-    "expires_at": 1787335098.8868933
+    "expires_at": 1787338119.1377187
   },
   "wiki:Fine_dining": {
     "value": [
@@ -796,7 +796,7 @@
       132.0,
       128.0
     ],
-    "expires_at": 1787335098.8959253
+    "expires_at": 1787338119.141571
   },
   "wiki:Travel": {
     "value": [
@@ -832,7 +832,7 @@
       559.0,
       630.0
     ],
-    "expires_at": 1787335098.8967738
+    "expires_at": 1787338119.1406522
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -868,7 +868,7 @@
       434.0,
       451.0
     ],
-    "expires_at": 1787335099.1012323
+    "expires_at": 1787338119.1397457
   },
   "wiki:Layoff": {
     "value": [
