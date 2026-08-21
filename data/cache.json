@@ -164,7 +164,7 @@
       119.1848,
       118.9028
     ],
-    "expires_at": 1787313237.0838387
+    "expires_at": 1787317169.0572357
   },
   "fred:VIXCLS": {
     "value": [
@@ -229,7 +229,7 @@
       15.84,
       14.89
     ],
-    "expires_at": 1787313237.0620975
+    "expires_at": 1787317169.0668998
   },
   "av:SPY": {
     "value": [
@@ -399,7 +399,7 @@
       2.75,
       2.73
     ],
-    "expires_at": 1787313237.0748336
+    "expires_at": 1787317169.041422
   },
   "av:NIFTYBEES.BSE": {
     "value": [
@@ -866,10 +866,6 @@
     ],
     "expires_at": 1787314304.9115536
   },
-  "gdelt_tone:US": {
-    "value": -2.0445,
-    "expires_at": 1787313422.6941733
-  },
   "wiki:Stock": {
     "value": [
       506.0,
@@ -904,7 +900,7 @@
       547.0,
       580.0
     ],
-    "expires_at": 1787312675.1047788
+    "expires_at": 1787315368.945883
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -940,7 +936,7 @@
       33.0,
       33.0
     ],
-    "expires_at": 1787312675.110107
+    "expires_at": 1787315368.9428315
   },
   "wiki:Employment": {
     "value": [
@@ -976,7 +972,7 @@
       460.0,
       392.0
     ],
-    "expires_at": 1787312675.1119454
+    "expires_at": 1787315368.9527802
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -1012,7 +1008,7 @@
       1119.0,
       1061.0
     ],
-    "expires_at": 1787312675.1121159
+    "expires_at": 1787315368.9391005
   },
   "wiki:Investment": {
     "value": [
@@ -1048,7 +1044,7 @@
       515.0,
       582.0
     ],
-    "expires_at": 1787312675.116312
+    "expires_at": 1787315368.9448333
   },
   "wiki:Venture_capital": {
     "value": [
@@ -1084,7 +1080,7 @@
       1265.0,
       1233.0
     ],
-    "expires_at": 1787312675.1186333
+    "expires_at": 1787315368.9468179
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -1120,7 +1116,7 @@
       434.0,
       451.0
     ],
-    "expires_at": 1787312675.209134
+    "expires_at": 1787315369.0474012
   },
   "wiki:Travel": {
     "value": [
@@ -1156,7 +1152,7 @@
       559.0,
       630.0
     ],
-    "expires_at": 1787312675.2104256
+    "expires_at": 1787315369.042958
   },
   "wiki:Sports_car": {
     "value": [
@@ -1192,7 +1188,7 @@
       459.0,
       595.0
     ],
-    "expires_at": 1787312675.213242
+    "expires_at": 1787315369.0441818
   },
   "wiki:Fine_dining": {
     "value": [
@@ -1228,10 +1224,10 @@
       132.0,
       128.0
     ],
-    "expires_at": 1787312675.2203126
+    "expires_at": 1787315369.049009
   },
-  "gdelt_tone:UK": {
-    "value": -1.9594,
-    "expires_at": 1787313487.371152
+  "gdelt_tone:IN": {
+    "value": -2.6314,
+    "expires_at": 1787314630.7383788
   }
 }
