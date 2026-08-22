@@ -540,7 +540,7 @@
       1233.0,
       1228.0
     ],
-    "expires_at": 1787418443.602712
+    "expires_at": 1787420594.0787923
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -576,7 +576,7 @@
       1061.0,
       973.0
     ],
-    "expires_at": 1787418443.593552
+    "expires_at": 1787420594.0764515
   },
   "wiki:Investment": {
     "value": [
@@ -612,7 +612,7 @@
       582.0,
       511.0
     ],
-    "expires_at": 1787418443.5909445
+    "expires_at": 1787420594.077416
   },
   "wiki:Employment": {
     "value": [
@@ -648,7 +648,7 @@
       392.0,
       371.0
     ],
-    "expires_at": 1787418443.5896525
+    "expires_at": 1787420594.074309
   },
   "wiki:Stock": {
     "value": [
@@ -684,7 +684,7 @@
       580.0,
       478.0
     ],
-    "expires_at": 1787418443.5919013
+    "expires_at": 1787420594.0701318
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -720,7 +720,7 @@
       33.0,
       33.0
     ],
-    "expires_at": 1787418443.5945482
+    "expires_at": 1787420594.0754428
   },
   "wiki:Travel": {
     "value": [
@@ -756,7 +756,7 @@
       630.0,
       559.0
     ],
-    "expires_at": 1787418443.6717875
+    "expires_at": 1787420594.168232
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -792,7 +792,7 @@
       451.0,
       542.0
     ],
-    "expires_at": 1787418443.6665318
+    "expires_at": 1787420594.1642246
   },
   "wiki:Fine_dining": {
     "value": [
@@ -828,7 +828,7 @@
       128.0,
       208.0
     ],
-    "expires_at": 1787418443.6822996
+    "expires_at": 1787420594.1865869
   },
   "wiki:Sports_car": {
     "value": [
@@ -864,11 +864,11 @@
       595.0,
       561.0
     ],
-    "expires_at": 1787418443.6706686
+    "expires_at": 1787420594.1739962
   },
   "gdelt_tone:US": {
     "value": -0.4575,
-    "expires_at": 1787418736.0260901
+    "expires_at": 1787419757.1748338
   },
   "wiki:Layoff": {
     "value": [
@@ -1229,9 +1229,5 @@
       306.0
     ],
     "expires_at": 1787419618.2641325
-  },
-  "gdelt_tone:UK": {
-    "value": -6.9727,
-    "expires_at": 1787418754.003294
   }
 }
