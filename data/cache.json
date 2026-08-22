@@ -348,7 +348,7 @@
       231.0,
       217.0
     ],
-    "expires_at": 1787438307.8270786
+    "expires_at": 1787441127.1368222
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -384,7 +384,7 @@
       588.0,
       570.0
     ],
-    "expires_at": 1787438307.8294144
+    "expires_at": 1787441127.1332088
   },
   "wiki:Inflation": {
     "value": [
@@ -420,7 +420,7 @@
       1041.0,
       907.0
     ],
-    "expires_at": 1787438307.8203855
+    "expires_at": 1787441127.1287878
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -456,7 +456,7 @@
       255.0,
       281.0
     ],
-    "expires_at": 1787438307.8350198
+    "expires_at": 1787441127.1377244
   },
   "wiki:Unemployment": {
     "value": [
@@ -492,7 +492,7 @@
       463.0,
       455.0
     ],
-    "expires_at": 1787438307.8315387
+    "expires_at": 1787441127.1312199
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -528,7 +528,7 @@
       606.0,
       737.0
     ],
-    "expires_at": 1787438307.8280818
+    "expires_at": 1787441127.1366441
   },
   "wiki:Recession": {
     "value": [
@@ -564,7 +564,7 @@
       432.0,
       420.0
     ],
-    "expires_at": 1787438307.8394897
+    "expires_at": 1787441127.1350067
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -600,7 +600,7 @@
       312.0,
       301.0
     ],
-    "expires_at": 1787438307.822237
+    "expires_at": 1787441127.1348493
   },
   "wiki:Bull_market": {
     "value": [
@@ -636,7 +636,7 @@
       27.0,
       25.0
     ],
-    "expires_at": 1787438307.9033277
+    "expires_at": 1787441127.1664793
   },
   "wiki:Economic_growth": {
     "value": [
@@ -672,7 +672,7 @@
       318.0,
       306.0
     ],
-    "expires_at": 1787438307.9024758
+    "expires_at": 1787441127.1653392
   },
   "wiki:Venture_capital": {
     "value": [
@@ -1094,7 +1094,7 @@
       119.1848,
       118.9028
     ],
-    "expires_at": 1787439290.5586522
+    "expires_at": 1787442927.417918
   },
   "fred:VIXCLS": {
     "value": [
@@ -1159,7 +1159,7 @@
       14.89,
       16.01
     ],
-    "expires_at": 1787439290.5666966
+    "expires_at": 1787442927.4146054
   },
   "fred:BAMLH0A0HYM2": {
     "value": [
@@ -1224,10 +1224,10 @@
       2.73,
       2.75
     ],
-    "expires_at": 1787439290.5749636
+    "expires_at": 1787442927.3047628
   },
-  "gdelt_tone:UK": {
-    "value": -4.7691,
-    "expires_at": 1787439131.6537733
+  "gdelt_tone:IN": {
+    "value": -4.6765,
+    "expires_at": 1787440359.407786
   }
 }
