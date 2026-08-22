@@ -540,7 +540,7 @@
       231.0,
       217.0
     ],
-    "expires_at": 1787431114.095066
+    "expires_at": 1787433987.1909015
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -576,7 +576,7 @@
       588.0,
       570.0
     ],
-    "expires_at": 1787431114.1033723
+    "expires_at": 1787433987.1873324
   },
   "wiki:Inflation": {
     "value": [
@@ -612,7 +612,7 @@
       1041.0,
       907.0
     ],
-    "expires_at": 1787431114.1049225
+    "expires_at": 1787433987.1919675
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -648,7 +648,7 @@
       255.0,
       281.0
     ],
-    "expires_at": 1787431114.0966523
+    "expires_at": 1787433987.1930382
   },
   "wiki:Unemployment": {
     "value": [
@@ -684,7 +684,7 @@
       463.0,
       455.0
     ],
-    "expires_at": 1787431114.1058772
+    "expires_at": 1787433987.2836506
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -720,7 +720,7 @@
       606.0,
       737.0
     ],
-    "expires_at": 1787431114.0998151
+    "expires_at": 1787433987.1896107
   },
   "wiki:Recession": {
     "value": [
@@ -756,7 +756,7 @@
       432.0,
       420.0
     ],
-    "expires_at": 1787431114.1074972
+    "expires_at": 1787433987.202312
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -792,7 +792,7 @@
       312.0,
       301.0
     ],
-    "expires_at": 1787431114.1067169
+    "expires_at": 1787433987.1964114
   },
   "wiki:Bull_market": {
     "value": [
@@ -828,7 +828,7 @@
       27.0,
       25.0
     ],
-    "expires_at": 1787431114.1947005
+    "expires_at": 1787433987.3540053
   },
   "wiki:Economic_growth": {
     "value": [
@@ -864,7 +864,7 @@
       318.0,
       306.0
     ],
-    "expires_at": 1787431114.2005286
+    "expires_at": 1787433987.3537803
   },
   "wiki:Venture_capital": {
     "value": [
@@ -1228,10 +1228,10 @@
   },
   "gdelt_tone:UK": {
     "value": -5.762,
-    "expires_at": 1787431909.9438446
+    "expires_at": 1787433164.9467056
   },
   "gdelt_tone:US": {
     "value": -1.0117,
-    "expires_at": 1787431870.665546
+    "expires_at": 1787433126.1280742
   }
 }
