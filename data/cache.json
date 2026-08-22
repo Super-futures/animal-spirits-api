@@ -708,7 +708,7 @@
       1233.0,
       1228.0
     ],
-    "expires_at": 1787437490.414548
+    "expires_at": 1787439906.237902
   },
   "wiki:Initial_public_offering": {
     "value": [
@@ -744,7 +744,7 @@
       1061.0,
       973.0
     ],
-    "expires_at": 1787437490.4064946
+    "expires_at": 1787439906.2311413
   },
   "wiki:Investment": {
     "value": [
@@ -780,7 +780,7 @@
       582.0,
       511.0
     ],
-    "expires_at": 1787437490.4039204
+    "expires_at": 1787439906.2390065
   },
   "wiki:Employment": {
     "value": [
@@ -816,7 +816,7 @@
       392.0,
       371.0
     ],
-    "expires_at": 1787437490.408685
+    "expires_at": 1787439906.2361846
   },
   "wiki:Consumer_confidence": {
     "value": [
@@ -852,7 +852,7 @@
       33.0,
       33.0
     ],
-    "expires_at": 1787437490.407695
+    "expires_at": 1787439906.2401514
   },
   "wiki:Stock": {
     "value": [
@@ -888,7 +888,7 @@
       580.0,
       478.0
     ],
-    "expires_at": 1787437490.4062824
+    "expires_at": 1787439906.2323558
   },
   "wiki:Sports_car": {
     "value": [
@@ -924,7 +924,7 @@
       595.0,
       561.0
     ],
-    "expires_at": 1787437490.467831
+    "expires_at": 1787439906.2890832
   },
   "wiki:Luxury_goods": {
     "value": [
@@ -960,7 +960,7 @@
       451.0,
       542.0
     ],
-    "expires_at": 1787437490.468851
+    "expires_at": 1787439906.288886
   },
   "wiki:Fine_dining": {
     "value": [
@@ -996,7 +996,7 @@
       128.0,
       208.0
     ],
-    "expires_at": 1787437490.4679837
+    "expires_at": 1787439906.2933724
   },
   "wiki:Travel": {
     "value": [
@@ -1032,7 +1032,7 @@
       630.0,
       559.0
     ],
-    "expires_at": 1787437490.467655
+    "expires_at": 1787439906.2768617
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -1226,16 +1226,8 @@
     ],
     "expires_at": 1787439290.5749636
   },
-  "gdelt_tone:US": {
-    "value": -1.3236,
-    "expires_at": 1787436608.8904088
-  },
-  "gdelt_tone:IN": {
-    "value": -2.9998,
-    "expires_at": 1787436687.608596
-  },
   "gdelt_tone:UK": {
     "value": -4.7691,
-    "expires_at": 1787437431.948036
+    "expires_at": 1787439131.6537733
   }
 }
