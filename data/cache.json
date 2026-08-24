@@ -243,7 +243,7 @@
       151.0,
       192.0
     ],
-    "expires_at": 1787543036.546606
+    "expires_at": 1787546063.3152885
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -279,7 +279,7 @@
       561.0,
       520.0
     ],
-    "expires_at": 1787543036.549672
+    "expires_at": 1787546063.3464496
   },
   "wiki:Inflation": {
     "value": [
@@ -315,7 +315,7 @@
       864.0,
       901.0
     ],
-    "expires_at": 1787543036.545359
+    "expires_at": 1787546063.3184505
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -351,7 +351,7 @@
       242.0,
       259.0
     ],
-    "expires_at": 1787543036.553616
+    "expires_at": 1787546063.3249185
   },
   "wiki:Unemployment": {
     "value": [
@@ -387,7 +387,7 @@
       374.0,
       416.0
     ],
-    "expires_at": 1787543036.5419288
+    "expires_at": 1787546063.3144085
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -423,7 +423,7 @@
       683.0,
       774.0
     ],
-    "expires_at": 1787543036.5442355
+    "expires_at": 1787546063.3131986
   },
   "wiki:Recession": {
     "value": [
@@ -459,7 +459,7 @@
       380.0,
       416.0
     ],
-    "expires_at": 1787543036.5477839
+    "expires_at": 1787546063.3440678
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -495,7 +495,7 @@
       223.0,
       283.0
     ],
-    "expires_at": 1787543036.5508392
+    "expires_at": 1787546063.3376386
   },
   "av:SPY": {
     "value": [
@@ -636,7 +636,7 @@
       322.0,
       255.0
     ],
-    "expires_at": 1787543036.6406188
+    "expires_at": 1787546063.427151
   },
   "wiki:Bull_market": {
     "value": [
@@ -672,7 +672,7 @@
       28.0,
       25.0
     ],
-    "expires_at": 1787543036.6486294
+    "expires_at": 1787546063.4300027
   },
   "fred:VIXCLS": {
     "value": [
