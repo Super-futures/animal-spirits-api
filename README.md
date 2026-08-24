@@ -137,7 +137,7 @@ Cache TTL: 15 minutes. Requests are paced 6 seconds apart with up to 3 attempts 
 
 Notes required to read `state.json` correctly.
 
-**Scope of each axis.** Attention is read from `en.wikipedia` for all three regions; other language editions are available through the same API and are not currently sampled. Narrative is restricted to economic stress vocabulary, so N measures the tone of stress discourse rather than general economic media tone. GDELT's `sourcecountry` filter selects by outlet location, not audience or language.
+**Scope of each axis.** Attention is read from `en.wikipedia` for all three regions; other language editions are available through the same API and are not currently sampled. Per head of population, English Wikipedia reach differs by more than twentyfold across the three regions, so A does not index comparable fractions of each population. Narrative is restricted to economic stress vocabulary, so N measures the tone of stress discourse rather than general economic media tone. GDELT's `sourcecountry` filter selects by outlet location, not audience or language.
 
 **Market composition.** The FRED stress backdrop is global and contributes 45% of every region's market value, so the three regional market signals share a common component. If a regional equity fetch fails while FRED succeeds, that region falls back to `stress × 0.6` and continues to report `live`.
 
