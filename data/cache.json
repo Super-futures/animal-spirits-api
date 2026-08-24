@@ -243,7 +243,7 @@
       380.0,
       416.0
     ],
-    "expires_at": 1787613136.0603702
+    "expires_at": 1787615544.5670028
   },
   "wiki:Layoff": {
     "value": [
@@ -279,7 +279,7 @@
       151.0,
       192.0
     ],
-    "expires_at": 1787613136.0469065
+    "expires_at": 1787615544.5555925
   },
   "wiki:Financial_crisis": {
     "value": [
@@ -315,7 +315,7 @@
       242.0,
       259.0
     ],
-    "expires_at": 1787613136.0752542
+    "expires_at": 1787615544.5564327
   },
   "wiki:Unemployment": {
     "value": [
@@ -351,7 +351,7 @@
       374.0,
       416.0
     ],
-    "expires_at": 1787613136.0666327
+    "expires_at": 1787615544.5584915
   },
   "wiki:Economic_bubble": {
     "value": [
@@ -387,7 +387,7 @@
       223.0,
       283.0
     ],
-    "expires_at": 1787613136.067741
+    "expires_at": 1787615544.5624332
   },
   "wiki:Inflation": {
     "value": [
@@ -423,7 +423,7 @@
       864.0,
       901.0
     ],
-    "expires_at": 1787613136.0647173
+    "expires_at": 1787615544.5455494
   },
   "wiki:Bankruptcy": {
     "value": [
@@ -459,7 +459,7 @@
       683.0,
       774.0
     ],
-    "expires_at": 1787613136.0559933
+    "expires_at": 1787615544.5525172
   },
   "wiki:Stock_market_crash": {
     "value": [
@@ -495,7 +495,7 @@
       561.0,
       520.0
     ],
-    "expires_at": 1787613136.0568519
+    "expires_at": 1787615544.5574026
   },
   "wiki:Bull_market": {
     "value": [
@@ -531,7 +531,7 @@
       28.0,
       25.0
     ],
-    "expires_at": 1787613136.113729
+    "expires_at": 1787615544.6036842
   },
   "fred:DTWEXBGS": {
     "value": [
@@ -760,7 +760,7 @@
       838.0,
       851.0
     ],
-    "expires_at": 1787613136.1204164
+    "expires_at": 1787615544.606462
   },
   "wiki:Employment": {
     "value": [
@@ -1551,8 +1551,12 @@
     ],
     "expires_at": 1787634011.0449405
   },
-  "gdelt_tone:US": {
-    "value": -3.3059,
-    "expires_at": 1787613356.3355663
+  "gdelt_tone:UK": {
+    "value": 0.59,
+    "expires_at": 1787614726.837136
+  },
+  "gdelt_tone:IN": {
+    "value": 0.0,
+    "expires_at": 1787614748.954558
   }
 }
